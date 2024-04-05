@@ -6,11 +6,13 @@ type TaskHeaderProps = {
    taskName: string
    taskId: string
    taskCreationTime: string
+   onOpenTaskDetails: () => void
 }
 
 export default function TaskHeader({
    taskName,
    taskCreationTime,
+   onOpenTaskDetails,
 }: TaskHeaderProps) {
    return (
       <div className="p-2 border-b border-gray-200 flex justify-between">
@@ -27,7 +29,7 @@ export default function TaskHeader({
                text="Edit"
                icon="file-edit"
                color={"main"}
-               onClick={() => {}}
+               onClick={onOpenTaskDetails}
             />
             <PopOverButton
                text="Delete"

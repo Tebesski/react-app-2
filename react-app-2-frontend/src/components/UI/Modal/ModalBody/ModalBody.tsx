@@ -17,16 +17,20 @@ export default function ModalBody({
    children,
    extraSectionContent,
    fullHeight,
-   contentCentered,
+   contentCentered = true,
    contentFullWidth,
    contentPadding = 5,
 }: ModalBodyProps) {
    return (
       <div
-         className={`bg-light flex flex-row justify-between gap-2 p-0 ${fullHeight ? "h-full" : "min-h-40"} w-full`}
+         className={`bg-light flex flex-row justify-center gap-2 p-0 ${
+            fullHeight ? "h-full" : "min-h-40"
+         } w-full`}
       >
          <div
-            className={`p-${contentPadding} flex ${contentFullWidth ? "w-full" : "w-2/3"} ${contentCentered && "mx-auto"}`}
+            className={`p-${contentPadding} flex ${
+               contentFullWidth ? "w-full" : "w-2/3"
+            } ${contentCentered && "mx-auto"} justify-center`}
          >
             {children}
          </div>

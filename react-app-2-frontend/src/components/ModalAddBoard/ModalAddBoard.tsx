@@ -3,10 +3,18 @@ import SubmitButton from "../UI/Buttons/SubmitButton/SubmitButton"
 import FormInput from "../UI/Form/FormInput/FormInput"
 import Modal from "../UI/Modal/Modal"
 import { Dialog } from "@material-tailwind/react"
+import { closeModal } from "@/reducers/modal.reducer"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "@/reducers/root.reducer"
 
-type ModalAddTableProps = { isOpened: boolean }
+export default function ModalAddBoard() {
+   const dispatch = useDispatch()
+   const { addBoardModal } = useSelector((state: RootState) => state.modalSlice)
 
-export default function ModalAddTable({ isOpened }: ModalAddTableProps) {
+   const closeAddBoardModal = () => {
+      dispatch(closeModal("addBoardModal"))
+   }
+
    const [tableName, setTableName] = useState("")
 
    function handleListSubmit() {
@@ -39,8 +47,13 @@ export default function ModalAddTable({ isOpened }: ModalAddTableProps) {
    )
 
    return (
-      <Dialog open={isOpened} handler={() => {}} size="xs">
-         <Modal mainContent={listNameInput} title={""} contentCentered={true} />
+      <Dialog open={addBoardModal} handler={closeAddBoardModal} size="xs">
+         <Modal
+            mainContent={listNameInput}
+            title={""}
+            contentCentered={true}
+            onClose={closeAddBoardModal}
+         />
       </Dialog>
    )
 }

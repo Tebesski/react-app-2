@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { Select, Option } from "@material-tailwind/react"
 import IconOnlyButton from "@/components/UI/Buttons/IconOnlyButton/IconOnlyButton"
+import { useDispatch } from "react-redux"
+import { openModal } from "@/reducers/modal.reducer"
 
 // Mocked board data
 const boards = [
@@ -11,6 +13,7 @@ const boards = [
 
 export default function BoardSelector() {
    const [selectedBoard, setSelectedBoard] = useState<string>("")
+   const dispatch = useDispatch()
 
    function handleChange(boardName: string | undefined) {
       if (!boardName) return
@@ -19,11 +22,11 @@ export default function BoardSelector() {
    }
 
    function handleManageBoards() {
-      console.log("Opening modal window to manage boards")
+      dispatch(openModal("boardManagerModal"))
    }
 
    function addNewBoard() {
-      console.log("Adding new board")
+      dispatch(openModal("addBoardModal"))
    }
 
    return (

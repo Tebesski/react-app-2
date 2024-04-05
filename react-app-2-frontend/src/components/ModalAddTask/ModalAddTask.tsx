@@ -5,10 +5,19 @@ import Modal from "../UI/Modal/Modal"
 import { Dialog } from "@material-tailwind/react"
 import FromDropdown from "../UI/Form/FormDropdown/FormDropdown"
 import Datepicker from "tailwind-datepicker-react"
-type ModalAddTaskProps = { isOpened: boolean }
-type TaskPriorityEnum = "low" | "medium" | "high"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "@/reducers/root.reducer"
+import { closeModal } from "@/reducers/modal.reducer"
+import { TaskPriorityEnum } from "@/types/TaskPriorityEnum"
 
-export default function ModalAddTask({ isOpened }: ModalAddTaskProps) {
+export default function ModalAddTask() {
+   const dispatch = useDispatch()
+   const { addTaskModal } = useSelector((state: RootState) => state.modalSlice)
+
+   const closeAddTaskModal = () => {
+      dispatch(closeModal("addTaskModal"))
+   }
+
    const [taskName, setTaskName] = useState("")
    const [taskDescription, setTaskDescription] = useState<string>("")
    const [dueDate, setDueDate] = useState(new Date())
@@ -87,8 +96,13 @@ export default function ModalAddTask({ isOpened }: ModalAddTaskProps) {
    )
 
    return (
-      <Dialog open={isOpened} handler={() => {}} size="xs">
-         <Modal mainContent={listNameInput} title={""} contentCentered={true} />
+      <Dialog open={addTaskModal} handler={closeAddTaskModal} size="xs">
+         <Modal
+            mainContent={listNameInput}
+            title={""}
+            contentCentered={true}
+            onClose={closeAddTaskModal}
+         />
       </Dialog>
    )
 }

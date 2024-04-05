@@ -3,10 +3,20 @@ import SubmitButton from "../UI/Buttons/SubmitButton/SubmitButton"
 import FormInput from "../UI/Form/FormInput/FormInput"
 import Modal from "../UI/Modal/Modal"
 import { Dialog } from "@material-tailwind/react"
+import { useDispatch, useSelector } from "react-redux"
+import { closeModal } from "@/reducers/modal.reducer"
+import { RootState } from "@/reducers/root.reducer"
 
-type ModalAddListProps = { isOpened: boolean }
+export default function ModalAddList() {
+   const dispatch = useDispatch()
+   const { addTaskListModal } = useSelector(
+      (state: RootState) => state.modalSlice
+   )
 
-export default function ModalAddList({ isOpened }: ModalAddListProps) {
+   const closeAddListModal = () => {
+      dispatch(closeModal("addTaskListModal"))
+   }
+
    const [listName, setListName] = useState("")
 
    function handleListSubmit() {
@@ -39,8 +49,13 @@ export default function ModalAddList({ isOpened }: ModalAddListProps) {
    )
 
    return (
-      <Dialog open={isOpened} handler={() => {}} size="xs">
-         <Modal mainContent={listNameInput} title={""} contentCentered={true} />
+      <Dialog open={addTaskListModal} handler={closeAddListModal} size="xs">
+         <Modal
+            mainContent={listNameInput}
+            title={""}
+            contentCentered={true}
+            onClose={closeAddListModal}
+         />
       </Dialog>
    )
 }

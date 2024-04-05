@@ -5,7 +5,6 @@ const initialState: ModalState = {
    addTaskModal: false,
    addTaskListModal: false,
    addBoardModal: false,
-   taskModalDetails: false,
    logHistoryModal: false,
    boardManagerModal: false,
    cardPopover: false,

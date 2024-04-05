@@ -1,13 +1,20 @@
 import { Drawer } from "@material-tailwind/react"
 import Modal from "../UI/Modal/Modal"
 import LogHistoryItem from "./LogHistoryItem/LogHistoryItem"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "@/reducers/root.reducer"
+import { closeModal } from "@/reducers/modal.reducer"
 
-type LogHistoryProps = { closeHistory: () => void; historyOpened: boolean }
+export default function LogHistory() {
+   const dispatch = useDispatch()
+   const { logHistoryModal } = useSelector(
+      (state: RootState) => state.modalSlice
+   )
 
-export default function LogHistory({
-   closeHistory,
-   historyOpened,
-}: LogHistoryProps) {
+   const closeHistory = () => {
+      dispatch(closeModal("logHistoryModal"))
+   }
+
    const logItems = [
       {
          id: 1,
@@ -118,10 +125,11 @@ export default function LogHistory({
    return (
       <Drawer
          placement="right"
-         open={historyOpened}
+         open={logHistoryModal}
          className="p-0 bg-transparent"
       >
          <Modal
+            rounded={false}
             onClose={closeHistory}
             mainContent={list}
             title={"History"}

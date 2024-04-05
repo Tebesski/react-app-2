@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss"
-const withMT = require("@material-tailwind/react/utils/withMT")
+import withMT from "@material-tailwind/react/utils/withMT"
 
 const config: Config = {
    mode: "jit",
@@ -21,7 +21,7 @@ const config: Config = {
             "priority-high": "#E74C3C",
          },
          flex: {
-            "basis-22": "0 0 23.8%",
+            "basis-22": "0 0 20%",
          },
       },
    },

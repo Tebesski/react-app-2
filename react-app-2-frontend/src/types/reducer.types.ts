@@ -3,6 +3,7 @@ import TaskListModel from "@/models/TaskList.model"
 import TaskCardModel from "../models/TaskCard.model"
 import BoardModel from "@/models/Board.model"
 import LogModel from "@/models/Log.model"
+import NotificationModel from "@/models/Notification.model"
 
 export type TaskState = {
    tasks: TaskCardModel[]
@@ -18,6 +19,10 @@ export type LogState = {
 
 export type BoardState = { boards: BoardModel[] }
 
+export type NotificationState = {
+   notifications: NotificationModel[]
+}
+
 export type UpdateTaskState = {
    task_id: string
    name: string
@@ -31,7 +36,6 @@ export type ModalState = {
    addTaskModal: boolean
    addTaskListModal: boolean
    addBoardModal: boolean
-   taskModalDetails: boolean
    logHistoryModal: boolean
    boardManagerModal: boolean
    cardPopover: boolean

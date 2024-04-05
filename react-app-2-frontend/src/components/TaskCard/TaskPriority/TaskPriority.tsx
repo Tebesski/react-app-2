@@ -12,7 +12,7 @@ export default function TaskPriority({ taskPriority }: TaskPriorityProps) {
    const priorityColor = priorityColorMap[taskPriority.toLowerCase()]
 
    return (
-      <div className="flex flex-row items-center justify-center gap-4 w-36 h-5 bg-gray-200 rounded-full p-3">
+      <div className="flex flex-row items-center justify-center gap-4 w-36 h-5 bg-gray-200 rounded-full p-3 select-none">
          <i
             className={`fas fa-circle ${priorityColor}`}
             style={{ fontSize: 7 }}

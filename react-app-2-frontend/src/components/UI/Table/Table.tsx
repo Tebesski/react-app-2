@@ -3,10 +3,15 @@ import ModalButton from "../Buttons/ModalButton/ModalButton"
 
 type TableProps = {
    tableHead: string[]
-   tableRows: { name: string; date: string }[]
+   tableRows: { name: string | JSX.Element; date: string }[]
+   handleEditBoard: () => void
 }
 
-export default function Table({ tableHead, tableRows }: TableProps) {
+export default function Table({
+   tableHead,
+   tableRows,
+   handleEditBoard,
+}: TableProps) {
    return (
       <Card className="h-full w-full overflow-auto shadow-none border-0 rounded-none max-h-96">
          <table className="w-full text-left">
@@ -36,7 +41,7 @@ export default function Table({ tableHead, tableRows }: TableProps) {
                      : "p-4 border-b border-blue-gray-50"
 
                   return (
-                     <tr key={name}>
+                     <tr key={index}>
                         <td className={classes}>
                            <Typography
                               variant="small"
@@ -60,6 +65,7 @@ export default function Table({ tableHead, tableRows }: TableProps) {
                               text={"Edit"}
                               icon={"file-edit"}
                               color="main"
+                              onClick={handleEditBoard}
                            />
                         </td>
                         <td className={classes}>

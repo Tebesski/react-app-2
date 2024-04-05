@@ -1,20 +1,28 @@
 import { Alert, IconButton } from "@material-tailwind/react"
-
-type NotificationProps = {
-   notificationText: string
-   notificationType: "green" | "red" | "blue" | "yellow"
-   notificationShown: boolean
-   closeNotification: () => void
-   icon?: string
-}
+import { INotification } from "@/models/Notification.model"
+import { useDispatch } from "react-redux"
+import { removeNotification } from "@/reducers/notification.reducer"
+import { useEffect } from "react"
 
 export default function Notification({
+   id,
    notificationText,
    notificationType,
    icon,
    notificationShown = false,
-   closeNotification,
-}: NotificationProps) {
+}: INotification) {
+   const dispatch = useDispatch()
+
+   useEffect(() => {
+      const timer = setTimeout(() => {
+         dispatch(removeNotification(id))
+      }, 3000)
+
+      return () => {
+         clearTimeout(timer)
+      }
+   }, [dispatch, id])
+
    return (
       <Alert
          open={notificationShown}
@@ -24,14 +32,14 @@ export default function Notification({
             mount: { y: 0 },
             unmount: { y: 100 },
          }}
-         className="h-10 min-w-60 items-center"
+         className="h-10 min-w-60 items-center fixed top-0 right-0 z-50" // added positioning classes
          action={
             <IconButton
                variant="text"
                color="white"
                size="sm"
                className="!absolute top-1 right-3"
-               onClick={closeNotification}
+               onClick={() => dispatch(removeNotification(id))}
             >
                <i className="fa fa-times" />
             </IconButton>

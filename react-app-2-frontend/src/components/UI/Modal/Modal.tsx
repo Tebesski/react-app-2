@@ -32,7 +32,9 @@ export default function Modal({
 }: ModalProps) {
    return (
       <div
-         className={`bg-white ${rounded ? "rounded-lg" : ""} overflow-hidden shadow-lg ${fullHeight ? "h-full" : ""}`}
+         className={`bg-white ${
+            rounded ? "rounded-lg" : ""
+         } overflow-hidden shadow-lg ${fullHeight ? "h-full" : ""}`}
       >
          <ModalHeader
             title={title}

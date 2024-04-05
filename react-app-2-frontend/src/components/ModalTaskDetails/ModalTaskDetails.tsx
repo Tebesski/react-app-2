@@ -10,12 +10,14 @@ import { useState } from "react"
 
 type ModalTaskDetailsProps = {
    task: TaskCardModel
-   isOpened: boolean
+   onClose: () => void
+   isOpen: boolean
 }
 
 export default function ModalTaskDetails({
    task,
-   isOpened,
+   onClose,
+   isOpen,
 }: ModalTaskDetailsProps) {
    const [description, setDescription] = useState<string>(
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio. Donec et nunc at felis. Nullam ac nisi. Donec non nisi. Nullam sit amet turpis elementum ligula vehicula consequat. Nullam sit amet turpis elementum ligula vehicula consequat... Nullam sit amet turpis elementum ligula vehicula consequat. Nullam sit amet turpis elementum ligula vehicula consequat... Nullam sit amet turpis elementum ligula vehicula consequat. Nullam sit amet turpis elementum ligula vehicula consequat..."
@@ -140,13 +142,9 @@ export default function ModalTaskDetails({
    )
 
    return (
-      <Dialog
-         open={isOpened}
-         handler={() => {}}
-         size="xl"
-         className="max-h-5/6"
-      >
+      <Dialog open={isOpen} handler={onClose} size="xl" className="max-h-5/6">
          <Modal
+            onClose={onClose}
             title={""}
             mainContent={mainContent}
             extraSectionContent={extraSectionContent}

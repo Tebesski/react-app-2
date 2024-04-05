@@ -1,21 +1,22 @@
 import PopOverButton from "@/components/UI/Buttons/PopOverButton/PopOverButton"
 import PopOver from "@/components/UI/PopOver/PopOver"
+import { openModal } from "@/reducers/modal.reducer"
 import { createRef, useState } from "react"
+import { useDispatch } from "react-redux"
 
 type TaskListHeaderProps = {
-   onAddTask: () => void
    taskListName: string
    taskListCardsAmount: number
    taskListId: string
 }
 
 export default function TaskListHeader({
-   onAddTask,
    taskListName,
    taskListCardsAmount,
    taskListId,
 }: TaskListHeaderProps) {
    const inputRef = createRef<HTMLInputElement>()
+   const dispatch = useDispatch()
    const [editingMode, setEditingMode] = useState(false)
    const [newListName, setNewListName] = useState(taskListName)
    const listName = taskListName
@@ -29,7 +30,7 @@ export default function TaskListHeader({
    }
 
    const handleAddCard = () => {
-      onAddTask()
+      dispatch(openModal("addTaskModal"))
    }
 
    const handleSubmitListName = () => {
