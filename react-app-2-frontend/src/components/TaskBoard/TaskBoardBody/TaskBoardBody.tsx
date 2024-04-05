@@ -18,7 +18,7 @@ export default function TaskBoardBody({ taskLists }: TaskBoardBodyProps) {
       },
    ]
    return (
-      <div className="flex flex-row justify-start items-start w-full gap-6 overflow-auto pb-5 w-full">
+      <div className="flex flex-row justify-start items-start gap-6 overflow-auto pb-5 w-full">
          {taskLists.map((taskList) => (
             <div className="flex-basis-22">
                <TaskList
