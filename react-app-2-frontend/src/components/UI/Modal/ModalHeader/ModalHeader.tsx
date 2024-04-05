@@ -20,9 +20,6 @@ export default function ModalHeader({
          <IconButton
             className={`focus:outline-none h-7 w-7 max-w-[30px] max-h-[30px] rounded-lg font-size-[10px] line-height-[14px]`}
             onClick={onCloseModal}
-            placeholder=""
-            onPointerEnterCapture={() => {}}
-            onPointerLeaveCapture={() => {}}
          >
             <i className="fas fa-times text-light text-xl"></i>
          </IconButton>

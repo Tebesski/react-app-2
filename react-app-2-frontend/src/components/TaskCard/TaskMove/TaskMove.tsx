@@ -24,9 +24,6 @@ export default function TaskMove({ taskListName, taskId }: TaskMoveProps) {
          <Select
             label={newTaskList || "Move to:"}
             onChange={(value) => handleChange(value)}
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
          >
             {taskList
                .filter((task) => task.task_list_name !== taskListName)

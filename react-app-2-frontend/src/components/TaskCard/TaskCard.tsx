@@ -23,15 +23,6 @@ export default function TaskCard({
    taskPriority,
    taskId,
 }: TaskCardProps) {
-   function handleDeleteTask() {
-      // Mimic delete task
-      console.log(`Deleting task ${taskId}`)
-   }
-
-   function onOpenTaskModal() {
-      // Mimic opening task modal
-      console.log(`Opening task modal for task ${taskId}`)
-   }
    return (
       <div className="w-full border-2 border-gray-300">
          {/* ========= CARD HEADER ========= */}

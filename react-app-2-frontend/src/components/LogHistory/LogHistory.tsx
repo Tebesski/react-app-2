@@ -120,9 +120,6 @@ export default function LogHistory({
          placement="right"
          open={historyOpened}
          className="p-0 bg-transparent"
-         placeholder={undefined}
-         onPointerEnterCapture={undefined}
-         onPointerLeaveCapture={undefined}
       >
          <Modal
             onClose={closeHistory}

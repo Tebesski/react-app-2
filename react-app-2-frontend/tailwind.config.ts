@@ -21,7 +21,7 @@ const config: Config = {
             "priority-high": "#E74C3C",
          },
          flex: {
-            "basis-22": "0 0 23.5%",
+            "basis-22": "0 0 23.8%",
          },
       },
    },

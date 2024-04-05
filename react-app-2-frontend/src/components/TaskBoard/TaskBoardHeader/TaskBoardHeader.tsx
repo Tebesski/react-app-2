@@ -13,7 +13,7 @@ export default function TaskBoardHeader({
    onOpenAddList,
 }: TaskBoardHeaderProps) {
    return (
-      <div className="flex justify-between items-center w-full">
+      <div className="flex justify-between items-center w-full px-12 pt-6">
          <div className="flex justify-between items-center gap-4">
             <h1 className="font-bold text-xl">Task Board 3000</h1>
             <TaskBoardManager />

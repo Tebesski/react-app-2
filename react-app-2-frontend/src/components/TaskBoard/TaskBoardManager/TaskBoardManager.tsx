@@ -32,9 +32,6 @@ export default function BoardSelector() {
             <Select
                label={selectedBoard || "Select Board"}
                onChange={(value) => handleChange(value)}
-               placeholder={undefined}
-               onPointerEnterCapture={undefined}
-               onPointerLeaveCapture={undefined}
             >
                {boards.map((board) => (
                   <Option key={board.board_id} value={board.board_name}>

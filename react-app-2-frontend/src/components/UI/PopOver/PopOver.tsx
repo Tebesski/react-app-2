@@ -16,21 +16,11 @@ export default function PopOver({ children }: PopOverProps) {
                size="sm"
                style={{ backgroundColor: "transparent", fontSize: 16 }}
                ripple={false}
-               placeholder={undefined}
-               onPointerEnterCapture={undefined}
-               onPointerLeaveCapture={undefined}
             >
                <i className="fas fa-ellipsis-v"></i>
             </IconButton>
          </PopoverHandler>
-         <PopoverContent
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-            className="p-2"
-         >
-            {children}
-         </PopoverContent>
+         <PopoverContent className="p-2">{children}</PopoverContent>
       </Popover>
    )
 }

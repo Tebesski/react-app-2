@@ -21,7 +21,12 @@ export default function TaskBoardBody({ taskLists }: TaskBoardBodyProps) {
       <div className="flex flex-row justify-start items-start w-full gap-6 overflow-auto pb-5 w-full">
          {taskLists.map((taskList) => (
             <div className="flex-basis-22">
-               <TaskList tasks={tasks} searchQuery={""} {...taskList} />
+               <TaskList
+                  key={taskList.task_list_id}
+                  tasks={tasks}
+                  searchQuery={""}
+                  {...taskList}
+               />
             </div>
          ))}
       </div>

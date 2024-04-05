@@ -10,7 +10,6 @@ type TaskHeaderProps = {
 
 export default function TaskHeader({
    taskName,
-   taskId,
    taskCreationTime,
 }: TaskHeaderProps) {
    return (

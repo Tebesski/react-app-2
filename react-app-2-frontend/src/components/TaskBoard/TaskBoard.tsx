@@ -23,11 +23,11 @@ export default function TaskBoard() {
                      task_list_name: "Task List 2",
                   },
                   {
-                     task_list_id: "2",
+                     task_list_id: "3",
                      task_list_name: "Task List 2",
                   },
                   {
-                     task_list_id: "2",
+                     task_list_id: "4",
                      task_list_name: "Task List 2",
                   },
                ]}
