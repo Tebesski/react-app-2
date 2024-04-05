@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+
+@layer components {
+   .btn {
+      @apply items-center justify-center rounded flex flex-row px-5 py-2;
+   }
+   .large-btn {
+      @apply px-5 py-2;
+   }
+   .small-btn {
+      @apply px-2 py-1;
+   }
+   .medium-btn {
+      @apply px-6 py-1;
+   }
+   .icon-btn {
+      @apply gap-1;
+   }
+   .icon-btn span {
+      @apply self-center align-middle;
+   }
+   .icon-btn svg {
+      @apply w-3 h-3;
+   }
+   .outlined-dashed-btn {
+      @apply font-semibold text-main border border-main border-dashed hover:bg-light hover:border-main active:bg-main-darker active:border-main active:text-light transition-colors duration-200 ease-in-out mt-[-2px];
+   }
+   .add-list-btn {
+      @apply text-light bg-main border border-main hover:bg-dark active:bg-light active:text-dark active:border-main transition-colors duration-200 ease-in-out;
+   }
+   .history-btn {
+      @apply text-main border border-main hover:bg-light hover:border-main active:bg-main-darker active:border-main active:text-light transition-colors duration-200 ease-in-out;
+   }
+   .taskListBody-scrollbar-hide {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+   }
+   .taskListBody-scrollbar-hide::-webkit-scrollbar {
+      display: none;
+   }
+}
+
+@tailwind utilities;
