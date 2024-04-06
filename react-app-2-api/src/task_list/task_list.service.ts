@@ -25,6 +25,7 @@ export class TaskListService {
 
   /* GET ALL LISTS */
   public async getLists(): Promise<TaskList[]> {
+    this.logger.verbose(`Fetching all lists`);
     try {
       const lists = await this.taskListRepository.find({
         order: {
@@ -40,6 +41,8 @@ export class TaskListService {
 
   /* GET TASK LIST BY ID */
   public async getTaskListById(id: string): Promise<TaskList> {
+    this.logger.verbose(`Fetching list by ID`);
+
     try {
       const taskList = await this.taskListRepository.findOne({
         where: { task_list_id: id },
@@ -51,6 +54,23 @@ export class TaskListService {
         `Failed to fetch task list with ID: ${id}`,
         error.stack,
       );
+      throw new Error(`Failed to fetch task list with board ID: ${id}`);
+    }
+  }
+
+  /* GET TASK LIST BY BOARD ID */
+  public async getTaskListByBoardId(id: string): Promise<TaskList[]> {
+    this.logger.verbose(`Fetching list by board ID`);
+    try {
+      const taskList = await this.taskListRepository.find({
+        where: { board_id: id },
+      });
+      return taskList;
+    } catch (error) {
+      this.logger.error(
+        `Failed to fetch task list with board ID: ${id}`,
+        error.stack,
+      );
     }
   }
 
@@ -58,8 +78,11 @@ export class TaskListService {
   public async createList(
     createTaskListDto: CreateTaskListDto,
   ): Promise<TaskList> {
-    const { task_list_name } = createTaskListDto;
-    const newTaskList = this.taskListRepository.create({ task_list_name });
+    const { task_list_name, board_id } = createTaskListDto;
+    const newTaskList = this.taskListRepository.create({
+      task_list_name,
+      board_id,
+    });
 
     await this.taskListRepository.save(newTaskList);
 

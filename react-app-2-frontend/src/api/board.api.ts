@@ -6,7 +6,7 @@ import BoardModel from "@/models/Board.model"
 // Fetch all boards
 export async function fetchBoardList(): Promise<BoardModel[] | undefined> {
    try {
-      const res: AxiosResponse<BoardModel[]> = await client.get("/boards")
+      const res: AxiosResponse<BoardModel[]> = await client.get("/board")
       return res.data
    } catch (error: any) {
       handleError(error)
@@ -19,7 +19,7 @@ export async function fetchBoardById(
 ): Promise<BoardModel | undefined> {
    try {
       const res: AxiosResponse<BoardModel> = await client.get(
-         `/boards/${board_id}`
+         `/board/${board_id}`
       )
       return res.data
    } catch (error: any) {
@@ -32,7 +32,7 @@ export async function createBoard(
    board_name: string
 ): Promise<BoardModel | undefined> {
    try {
-      const res: AxiosResponse<BoardModel> = await client.post("/boards", {
+      const res: AxiosResponse<BoardModel> = await client.post("/board", {
          board_name,
       })
       return res.data
@@ -47,7 +47,7 @@ export async function deleteBoard(
 ): Promise<BoardModel | undefined> {
    try {
       const res: AxiosResponse<BoardModel> = await client.delete(
-         `/boards/${board_id}`
+         `/board/${board_id}`
       )
       return res.data
    } catch (error: any) {
@@ -62,7 +62,7 @@ export async function updateBoardName(
 ): Promise<BoardModel | undefined> {
    try {
       const res: AxiosResponse<BoardModel> = await client.patch(
-         `/boards/${board_id}`,
+         `/board/${board_id}`,
          { board_name }
       )
       return res.data

@@ -7,17 +7,23 @@ import NotificationModel from "@/models/Notification.model"
 
 export type TaskState = {
    tasks: TaskCardModel[]
+   currentTasks: TaskCardModel[]
+   selectedTask: TaskCardModel | undefined
 }
 
 export type TaskListState = {
    taskLists: TaskListModel[]
+   currentTaskList: TaskListModel[]
 }
 
 export type LogState = {
    logs: LogModel[]
 }
 
-export type BoardState = { boards: BoardModel[] }
+export type BoardState = {
+   boards: BoardModel[]
+   currentBoard: BoardModel | undefined
+}
 
 export type NotificationState = {
    notifications: NotificationModel[]
@@ -38,6 +44,7 @@ export type ModalState = {
    addBoardModal: boolean
    logHistoryModal: boolean
    boardManagerModal: boolean
+   taskDetailsModal: boolean
    cardPopover: boolean
    listPopover: boolean
 }

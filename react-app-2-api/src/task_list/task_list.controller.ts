@@ -26,6 +26,13 @@ export class TaskListController {
     return await this.taskListService.getTaskListById(id);
   }
 
+  @Get('/board_id/:board_id')
+  public async getTaskListByBoardId(
+    @Param('board_id') id: string,
+  ): Promise<TaskList[]> {
+    return await this.taskListService.getTaskListByBoardId(id);
+  }
+
   @Post()
   public async createTaskList(
     @Body() createTaskListDto: CreateTaskListDto,

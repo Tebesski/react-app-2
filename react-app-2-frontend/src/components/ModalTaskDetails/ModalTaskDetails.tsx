@@ -19,96 +19,13 @@ export default function ModalTaskDetails({
    onClose,
    isOpen,
 }: ModalTaskDetailsProps) {
-   const [description, setDescription] = useState<string>(
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio. Donec et nunc at felis. Nullam ac nisi. Donec non nisi. Nullam sit amet turpis elementum ligula vehicula consequat. Nullam sit amet turpis elementum ligula vehicula consequat... Nullam sit amet turpis elementum ligula vehicula consequat. Nullam sit amet turpis elementum ligula vehicula consequat... Nullam sit amet turpis elementum ligula vehicula consequat. Nullam sit amet turpis elementum ligula vehicula consequat..."
-   )
+   const [name, setName] = useState<string>(task.task_name)
+   const [description, setDescription] = useState<string>(task.task_description)
+   const [dueDate, setDueDate] = useState<string>(task.task_due_date)
+   const [priority, setPriority] = useState<string>(task.task_priority)
+   const [list, setList] = useState<string>(task.task_list_id)
 
-   function handleChangeDescription(e: React.ChangeEvent<HTMLTextAreaElement>) {
-      setDescription(e.target.value)
-   }
-
-   const logs: LogModel[] = [
-      {
-         log_id: "1",
-         log_action: "CREATE",
-         log_date: new Date(),
-         new_value: "1",
-         old_value: "2",
-         entity_field: "task_name",
-         entity_id: "1",
-         entity_type: "Task",
-      },
-      {
-         log_id: "2",
-         log_action: "MOVE",
-         log_date: new Date(),
-         new_value: "1",
-         old_value: "2",
-         entity_field: "task_name",
-         entity_id: "1",
-         entity_type: "Task",
-      },
-      {
-         log_id: "3",
-         log_action: "RENAME",
-         log_date: new Date(),
-         new_value: "1",
-         old_value: "2",
-         entity_field: "task_name",
-         entity_id: "1",
-         entity_type: "Task",
-      },
-      {
-         log_id: "3",
-         log_action: "RENAME",
-         log_date: new Date(),
-         new_value: "1",
-         old_value: "2",
-         entity_field: "task_name",
-         entity_id: "1",
-         entity_type: "Task",
-      },
-      {
-         log_id: "3",
-         log_action: "RENAME",
-         log_date: new Date(),
-         new_value: "1",
-         old_value: "2",
-         entity_field: "task_name",
-         entity_id: "1",
-         entity_type: "Task",
-      },
-      {
-         log_id: "3",
-         log_action: "RENAME",
-         log_date: new Date(),
-         new_value: "1",
-         old_value: "2",
-         entity_field: "task_name",
-         entity_id: "1",
-         entity_type: "Task",
-      },
-      {
-         log_id: "3",
-         log_action: "RENAME",
-         log_date: new Date(),
-         new_value: "1",
-         old_value: "2",
-         entity_field: "task_name",
-         entity_id: "1",
-         entity_type: "Task",
-      },
-      {
-         log_id: "3",
-         log_action: "RENAME",
-         log_date: new Date(),
-         new_value: "1",
-         old_value: "2",
-         entity_field: "task_name",
-         entity_id: "1",
-         entity_type: "Task",
-      },
-   ]
+   const logs: LogModel[] = []
 
    const Activity = logs.map((logItem: LogModel) => (
       <TaskActivityItem key={logItem.log_id} logItem={logItem} />
@@ -124,17 +41,17 @@ export default function ModalTaskDetails({
 
    const mainContent = (
       <div className="flex flex-col w-full gap-10">
-         <ModalTaskTitle title={task.task_name} />
+         <ModalTaskTitle title={name} />
          <ModalTaskInfobox
             info={{
-               dueDate: task.task_due_date,
-               priority: task.task_priority,
-               list: task.task_list_id,
+               dueDate: dueDate,
+               priority: priority,
+               list: list,
             }}
          />
          <ModalTaskDescription
             description={description}
-            changeDescription={handleChangeDescription}
+            changeDescription={() => setDescription(description)}
             toggleEdit={() => {}}
             editMode={false}
          />

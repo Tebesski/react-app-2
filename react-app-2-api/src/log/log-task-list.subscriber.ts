@@ -68,6 +68,7 @@ export default class LogTaskListSubscriber
     log.old_value = oldValue;
     log.new_value = newValue;
     log.entity_field = 'task_list_name';
+    log.board_id = event.entity.board_id;
 
     const updateDetails =
       !!oldValue && !!newValue

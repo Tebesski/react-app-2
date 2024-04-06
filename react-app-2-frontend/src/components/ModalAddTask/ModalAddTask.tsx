@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SubmitButton from "../UI/Buttons/SubmitButton/SubmitButton"
 import FormInput from "../UI/Form/FormInput/FormInput"
 import Modal from "../UI/Modal/Modal"
@@ -9,8 +9,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/reducers/root.reducer"
 import { closeModal } from "@/reducers/modal.reducer"
 import { TaskPriorityEnum } from "@/types/TaskPriorityEnum"
+import { addNewTask } from "@/reducers/task.reducer"
+import TaskCardModel from "@/models/TaskCard.model"
+import { createTaskCard } from "@/api/task.api"
 
-export default function ModalAddTask() {
+type ModalAddTaskProps = { taskListId: string }
+
+export default function ModalAddTask({ taskListId }: ModalAddTaskProps) {
    const dispatch = useDispatch()
    const { addTaskModal } = useSelector((state: RootState) => state.modalSlice)
 
@@ -28,9 +33,27 @@ export default function ModalAddTask() {
       { key: "medium", value: "MEDIUM" },
       { key: "high", value: "HIGH" },
    ]
+   const [newTask, setNewTask] = useState<TaskCardModel>()
+
+   useEffect(() => {
+      if (newTask) {
+         dispatch(addNewTask(newTask))
+         closeAddTaskModal()
+      }
+   }, [newTask])
 
    function handleTaskSubmit() {
-      console.log("List name: ", taskName)
+      async function addTask() {
+         const newCard = await createTaskCard({
+            task_list_id: taskListId,
+            task_name: taskName,
+            task_description: taskDescription,
+            task_due_date: dueDate.toISOString(),
+            task_priority: priority,
+         })
+         setNewTask(newCard)
+      }
+      addTask()
    }
 
    function handleChangeTaskName<T extends HTMLInputElement>(
@@ -96,7 +119,7 @@ export default function ModalAddTask() {
    )
 
    return (
-      <Dialog open={addTaskModal} handler={closeAddTaskModal} size="xs">
+      <Dialog open={addTaskModal} handler={() => {}} size="xs">
          <Modal
             mainContent={listNameInput}
             title={""}

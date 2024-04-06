@@ -1,9 +1,12 @@
 import { Card, Typography } from "@material-tailwind/react"
 import ModalButton from "../Buttons/ModalButton/ModalButton"
+import { useDispatch } from "react-redux"
+import { deleteBoard } from "@/api/board.api"
+import { deleteCurrentBoard } from "@/reducers/board.reducer"
 
 type TableProps = {
    tableHead: string[]
-   tableRows: { name: string | JSX.Element; date: string }[]
+   tableRows: { name: string | JSX.Element; date: string; board_id: string }[]
    handleEditBoard: () => void
 }
 
@@ -12,6 +15,13 @@ export default function Table({
    tableRows,
    handleEditBoard,
 }: TableProps) {
+   const dispatch = useDispatch()
+
+   async function handleDeleteBoard(boardId: string) {
+      await deleteBoard(boardId)
+      dispatch(deleteCurrentBoard(boardId))
+   }
+
    return (
       <Card className="h-full w-full overflow-auto shadow-none border-0 rounded-none max-h-96">
          <table className="w-full text-left">
@@ -34,7 +44,7 @@ export default function Table({
                </tr>
             </thead>
             <tbody>
-               {tableRows.map(({ name, date }, index) => {
+               {tableRows.map(({ name, date, board_id }, index) => {
                   const isLast = index === tableRows.length - 1
                   const classes = isLast
                      ? "p-4"
@@ -42,6 +52,7 @@ export default function Table({
 
                   return (
                      <tr key={index}>
+                        {/* BOARD NAME */}
                         <td className={classes}>
                            <Typography
                               variant="small"
@@ -51,6 +62,7 @@ export default function Table({
                               {name}
                            </Typography>
                         </td>
+                        {/* BOARD DATE */}
                         <td className={classes}>
                            <Typography
                               variant="small"
@@ -61,6 +73,7 @@ export default function Table({
                            </Typography>
                         </td>
                         <td className={classes}>
+                           {/* EDIT BOARD BUTTON */}
                            <ModalButton
                               text={"Edit"}
                               icon={"file-edit"}
@@ -68,11 +81,14 @@ export default function Table({
                               onClick={handleEditBoard}
                            />
                         </td>
+
+                        {/* DELETE BOARD BUTTON */}
                         <td className={classes}>
                            <ModalButton
                               text={"Delete"}
                               icon={"trash"}
                               color="red-600"
+                              onClick={() => handleDeleteBoard(board_id)}
                            />
                         </td>
                      </tr>

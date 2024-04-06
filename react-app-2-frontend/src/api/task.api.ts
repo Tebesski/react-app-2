@@ -2,10 +2,11 @@ import { AxiosResponse } from "axios"
 import client from "./client"
 import TaskCardModel from "@/models/TaskCard.model"
 import handleError from "./utilities/handleError.api"
+import { CreateTaskDto } from "./dto/createTaskDto"
 
 export async function fetchTasks(): Promise<TaskCardModel[] | undefined> {
    try {
-      const res: AxiosResponse<TaskCardModel[]> = await client.get("/tasks")
+      const res: AxiosResponse<TaskCardModel[]> = await client.get("/task")
       return res.data
    } catch (error: any) {
       handleError(error)
@@ -17,7 +18,7 @@ export async function fetchTaskByTaskId(
 ): Promise<TaskCardModel | undefined> {
    try {
       const res: AxiosResponse<TaskCardModel> = await client.get(
-         `/tasks/${task_id}`
+         `/task/${task_id}`
       )
       return res.data
    } catch (error: any) {
@@ -26,11 +27,11 @@ export async function fetchTaskByTaskId(
 }
 
 export async function createTaskCard(
-   taskCard: TaskCardModel
+   taskCard: CreateTaskDto
 ): Promise<TaskCardModel | undefined> {
    try {
       const res: AxiosResponse<TaskCardModel> = await client.post(
-         "/tasks",
+         "/task",
          taskCard
       )
       return res.data
@@ -44,7 +45,7 @@ export async function deleteTaskCard(
 ): Promise<TaskCardModel | undefined> {
    try {
       const res: AxiosResponse<TaskCardModel> = await client.delete(
-         `/tasks/${task_id}`
+         `/task/${task_id}`
       )
       return res.data
    } catch (error: any) {
@@ -58,7 +59,7 @@ export async function moveTaskCard(
 ): Promise<TaskCardModel | undefined> {
    try {
       const res: AxiosResponse<TaskCardModel> = await client.patch(
-         `/tasks/${task_id}/task_list_id`,
+         `/task/${task_id}/task_list_id`,
          { task_list_id }
       )
       return res.data
@@ -77,7 +78,7 @@ export async function updateTaskCardName(
    }
    try {
       const res: AxiosResponse<TaskCardModel> = await client.patch(
-         `/tasks/${task_id}/task_name`,
+         `/task/${task_id}/task_name`,
          { task_name }
       )
       return res.data
@@ -92,7 +93,7 @@ export async function updateTaskCardDescription(
 ): Promise<TaskCardModel | undefined> {
    try {
       const res: AxiosResponse<TaskCardModel> = await client.patch(
-         `/tasks/${task_id}/task_description`,
+         `/task/${task_id}/task_description`,
          { task_description }
       )
       return res.data
@@ -107,7 +108,7 @@ export async function updateTaskCardDueDate(
 ): Promise<TaskCardModel | undefined> {
    try {
       const res: AxiosResponse<TaskCardModel> = await client.patch(
-         `/tasks/${task_id}/task_due_date`,
+         `/task/${task_id}/task_due_date`,
          { task_due_date }
       )
       return res.data
@@ -122,7 +123,7 @@ export async function updateTaskCardPriority(
 ): Promise<TaskCardModel | undefined> {
    try {
       const res: AxiosResponse<TaskCardModel> = await client.patch(
-         `/tasks/${task_id}/task_priority`,
+         `/task/${task_id}/task_priority`,
          { task_priority }
       )
       return res.data

@@ -1,3 +1,4 @@
+import { useState } from "react"
 import "./TaskDescription.css"
 
 type TaskDescriptionProps = {
@@ -9,11 +10,17 @@ export default function TaskDescription({
    taskDescription,
    onOpenTaskDetails,
 }: TaskDescriptionProps) {
+   const [isHovered, setIsHovered] = useState(false)
+
    return (
       <div
-         className="w-full min-h-24 max-h-24 cursor-pointer flare p-2 select-none"
+         className={`w-full min-h-24 max-h-24 cursor-pointer p-2 select-none ${
+            isHovered ? "flare" : ""
+         }`}
          title="Click to open task details"
          onClick={onOpenTaskDetails}
+         onMouseEnter={() => setIsHovered(true)}
+         onMouseLeave={() => setIsHovered(false)}
       >
          <p className="text-sm">
             {taskDescription.length > 120

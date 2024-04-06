@@ -1,6 +1,9 @@
+import { deleteTaskCard } from "@/api/task.api"
 import PopOverButton from "@/components/UI/Buttons/PopOverButton/PopOverButton"
 import PopOver from "@/components/UI/PopOver/PopOver"
+import { deleteTask } from "@/reducers/task.reducer"
 import dayjs from "dayjs"
+import { useDispatch } from "react-redux"
 
 type TaskHeaderProps = {
    taskName: string
@@ -13,7 +16,15 @@ export default function TaskHeader({
    taskName,
    taskCreationTime,
    onOpenTaskDetails,
+   taskId,
 }: TaskHeaderProps) {
+   const dispatch = useDispatch()
+
+   async function handleDeleteTask() {
+      await deleteTaskCard(taskId)
+      dispatch(deleteTask(taskId))
+   }
+
    return (
       <div className="p-2 border-b border-gray-200 flex justify-between">
          <div className="flex items-center justify-between">
@@ -35,7 +46,7 @@ export default function TaskHeader({
                text="Delete"
                icon="trash"
                color={"red-600"}
-               onClick={() => {}}
+               onClick={handleDeleteTask}
             />
          </PopOver>
       </div>

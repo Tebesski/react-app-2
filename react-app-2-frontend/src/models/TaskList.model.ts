@@ -1,7 +1,7 @@
 export interface ITaskList {
    task_list_id: string
-   board_id: string
    task_list_name: string
+   board_id: string
 }
 
 export default class TaskListModel implements ITaskList {

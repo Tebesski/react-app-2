@@ -4,6 +4,8 @@ import TaskCardModel from "../models/TaskCard.model"
 
 const initialState: TaskState = {
    tasks: [],
+   currentTasks: [],
+   selectedTask: undefined,
 }
 
 const taskSlice = createSlice({
@@ -14,7 +16,11 @@ const taskSlice = createSlice({
          state.tasks = action.payload.tasks
       },
 
-      addTask(state, action: PayloadAction<TaskCardModel>) {
+      setSelectedTask(state, action: PayloadAction<TaskCardModel | undefined>) {
+         state.selectedTask = action.payload
+      },
+
+      addNewTask(state, action: PayloadAction<TaskCardModel>) {
          state.tasks.push(action.payload)
       },
 
@@ -53,7 +59,13 @@ const taskSlice = createSlice({
    },
 })
 
-export const { setTasks, addTask, deleteTask, moveTask, updateTask } =
-   taskSlice.actions
+export const {
+   setTasks,
+   addNewTask,
+   deleteTask,
+   moveTask,
+   updateTask,
+   setSelectedTask,
+} = taskSlice.actions
 
 export default taskSlice.reducer

@@ -4,6 +4,7 @@ import BoardModel from "../models/Board.model"
 
 const initialState: BoardState = {
    boards: [],
+   currentBoard: undefined,
 }
 
 const boardSlice = createSlice({
@@ -14,11 +15,15 @@ const boardSlice = createSlice({
          state.boards = action.payload.boards
       },
 
+      setCurrentBoard(state, action: PayloadAction<BoardModel>) {
+         state.currentBoard = action.payload
+      },
+
       addBoard(state, action: PayloadAction<BoardModel>) {
          state.boards.push(action.payload)
       },
 
-      deleteBoard(state, action: PayloadAction<string>) {
+      deleteCurrentBoard(state, action: PayloadAction<string>) {
          state.boards = state.boards.filter(
             (board) => board.board_id !== action.payload
          )
@@ -38,7 +43,12 @@ const boardSlice = createSlice({
    },
 })
 
-export const { setBoards, addBoard, deleteBoard, renameBoard } =
-   boardSlice.actions
+export const {
+   setBoards,
+   addBoard,
+   deleteCurrentBoard,
+   renameBoard,
+   setCurrentBoard,
+} = boardSlice.actions
 
 export default boardSlice.reducer

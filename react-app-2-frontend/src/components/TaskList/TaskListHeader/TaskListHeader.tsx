@@ -1,6 +1,8 @@
+import { deleteTaskList } from "@/api/task-list.api"
 import PopOverButton from "@/components/UI/Buttons/PopOverButton/PopOverButton"
 import PopOver from "@/components/UI/PopOver/PopOver"
 import { openModal } from "@/reducers/modal.reducer"
+import { deleteCurrentList, deleteList } from "@/reducers/task-list.reducer"
 import { createRef, useState } from "react"
 import { useDispatch } from "react-redux"
 
@@ -25,8 +27,10 @@ export default function TaskListHeader({
       setEditingMode(true)
    }
 
-   const handleDeleteList = () => {
-      console.log("Deleting list with id: ", taskListId)
+   async function handleDeleteList() {
+      await deleteTaskList(taskListId)
+      dispatch(deleteList(taskListId))
+      dispatch(deleteCurrentList(taskListId))
    }
 
    const handleAddCard = () => {

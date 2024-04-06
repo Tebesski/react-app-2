@@ -19,7 +19,7 @@ export async function fetchTaskListByBoardId(
 ): Promise<TaskListModel[] | undefined> {
    try {
       const res: AxiosResponse<TaskListModel[]> = await client.get(
-         `/task-list/${board_id}`
+         `/task-list/board_id/${board_id}`
       )
       return res.data
    } catch (error: any) {
@@ -29,12 +29,13 @@ export async function fetchTaskListByBoardId(
 
 // Create a new task list
 export async function createTaskList(
-   task_list_name: string
+   task_list_name: string,
+   board_id: string
 ): Promise<TaskListModel | undefined> {
    try {
       const res: AxiosResponse<TaskListModel> = await client.post(
          "/task-list",
-         { task_list_name }
+         { task_list_name, board_id }
       )
       return res.data
    } catch (error: any) {

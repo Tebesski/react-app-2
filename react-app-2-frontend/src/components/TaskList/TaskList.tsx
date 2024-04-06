@@ -2,44 +2,36 @@ import TaskListHeader from "./TaskListHeader/TaskListHeader"
 import TaskListBody from "./TaskListBody/TaskListBody"
 import AddCardButton from "../UI/Buttons/AddCardButton/AddCardButton"
 import TaskCardModel from "../../models/TaskCard.model"
-import { useDispatch } from "react-redux"
-import { openModal } from "@/reducers/modal.reducer"
 
 type TaskListProps = {
-   tasks: TaskCardModel[]
    task_list_name: string
    task_list_id: string
-   searchQuery: string
+   tasks: TaskCardModel[]
+   onAddTask: () => void
 }
 
 export default function TaskList({
-   tasks,
    task_list_name,
    task_list_id,
-   searchQuery,
+   tasks,
+   onAddTask,
 }: TaskListProps) {
-   const dispatch = useDispatch()
    function handleAddTask() {
-      dispatch(openModal("addTaskModal"))
+      onAddTask()
    }
 
-   const taskListName = task_list_name
-
-   const filteredTasks = tasks.filter(
-      (task) =>
-         task.task_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         task.task_description.toLowerCase().includes(searchQuery.toLowerCase())
-   )
-
    return (
-      <div className="flex flex-col space-y-2 w-full gap-2">
+      <div className="flex flex-col space-y-2 w-full max-h-[550px] gap-2">
          <TaskListHeader
-            taskListName={taskListName}
+            taskListName={task_list_name}
             taskListCardsAmount={tasks.length}
             taskListId={task_list_id}
          />
          <AddCardButton onClick={handleAddTask} />
-         <TaskListBody tasks={filteredTasks} />
+         <TaskListBody
+            tasks={tasks.filter((i) => i.task_list_id === task_list_id)}
+            taskListName={task_list_name}
+         />
       </div>
    )
 }

@@ -40,7 +40,8 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.board (
     board_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    board_name character varying(255) NOT NULL
+    board_name character varying(255) NOT NULL,
+    board_creation_time timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -57,7 +58,7 @@ CREATE TABLE public.log (
     entity_field character varying(255),
     new_value text,
     old_value text,
-    board_id uuid NOT NULL
+    board_id uuid
 );
 
 

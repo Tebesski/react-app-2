@@ -9,7 +9,7 @@ export default class Log {
   @PrimaryGeneratedColumn('uuid')
   log_id: string;
 
-  @Column()
+  @Column({ nullable: true })
   @IsUUID()
   board_id: string;
 

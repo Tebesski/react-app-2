@@ -4,6 +4,7 @@ import TaskListModel from "../models/TaskList.model"
 
 const initialState: TaskListState = {
    taskLists: [],
+   currentTaskList: [],
 }
 
 const tasksListSlice = createSlice({
@@ -13,11 +14,22 @@ const tasksListSlice = createSlice({
       setTaskList(state, action: PayloadAction<TaskListState>) {
          state.taskLists = action.payload.taskLists
       },
-      addNewTask(state, action: PayloadAction<TaskListModel>) {
+      setCurrentTaskList(state, action: PayloadAction<TaskListModel[]>) {
+         state.currentTaskList = action.payload
+      },
+      addNewTaskList(state, action: PayloadAction<TaskListModel>) {
          state.taskLists.push(action.payload)
+      },
+      addNewCurrentTaskList(state, action: PayloadAction<TaskListModel>) {
+         state.currentTaskList.push(action.payload)
       },
       deleteList(state, action: PayloadAction<string>) {
          state.taskLists = state.taskLists.filter(
+            (task) => task.task_list_id !== action.payload
+         )
+      },
+      deleteCurrentList(state, action: PayloadAction<string>) {
+         state.currentTaskList = state.currentTaskList.filter(
             (task) => task.task_list_id !== action.payload
          )
       },
@@ -35,7 +47,14 @@ const tasksListSlice = createSlice({
    },
 })
 
-export const { setTaskList, addNewTask, deleteList, renameTaskList } =
-   tasksListSlice.actions
+export const {
+   setTaskList,
+   addNewTaskList,
+   addNewCurrentTaskList,
+   deleteList,
+   deleteCurrentList,
+   renameTaskList,
+   setCurrentTaskList,
+} = tasksListSlice.actions
 
 export default tasksListSlice.reducer
