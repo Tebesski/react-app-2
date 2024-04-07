@@ -3,42 +3,60 @@ import FormInput from "@/components/UI/Form/FormInput/FormInput"
 
 type ModalTaskDescriptionProps = {
    description: string
-   changeDescription: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+   changeDescription: (value: string) => void
    toggleEdit: () => void
-   editMode: boolean
+   cancelEdit: () => void
+   submitNewDescription: () => void
+   newDescription: string
+   editingDescription: boolean
 }
 
 export default function ModalTaskDescription({
    description,
    changeDescription,
    toggleEdit,
-   editMode,
+   cancelEdit,
+   submitNewDescription,
+   newDescription,
+   editingDescription,
 }: ModalTaskDescriptionProps) {
-   const displayDescription = editMode ? (
+   const handleEditDescription = (description: string) => {
+      changeDescription(description)
+   }
+
+   const displayDescription = editingDescription ? (
       <div className="flex items-start">
          <FormInput
             multiline
             inputLabel="Description"
-            value={description}
+            value={newDescription || description}
             required
             variant="outlined"
-            changeHandler={changeDescription}
+            changeHandler={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+               handleEditDescription(e.target.value)
+            }
             rows={6}
          />
          <IconOnlyButton
-            onClick={() => console.log("edit")}
+            onClick={submitNewDescription}
             size={"5xl"}
             icon={"check-square"}
+            customClasses="mt-1"
+         />
+         <IconOnlyButton
+            onClick={cancelEdit}
+            size={"5xl"}
+            icon={"times"}
             customClasses="mt-1"
          />
       </div>
    ) : (
       <div className="flex items-start gap-4">
-         <p className="text-dark overflow-auto max-h-40 text-main text-sm">
+         <p className="text-dark overflow-auto max-h-40 text-sm">
             {description}
          </p>
          <IconOnlyButton
-            onClick={() => console.log("edit")}
+            onClick={toggleEdit}
             size={"4xl"}
             icon={"file-edit"}
             customClasses="mt-1"

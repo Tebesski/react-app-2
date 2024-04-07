@@ -7,6 +7,9 @@ export class Task {
   task_id: string;
 
   @Column()
+  board_id: string;
+
+  @Column()
   task_list_id: string;
 
   @Column()

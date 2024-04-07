@@ -30,38 +30,17 @@ export class TaskService {
     private taskListService: TaskListService,
   ) {}
 
-  /* GET ALL / FILTERED TASKS */
-  public async getTasks(filterDto: GetTaskFilterDto): Promise<Task[]> {
-    const { task_priority, search, task_creation_time } = filterDto;
-    const query = this.taskRepository.createQueryBuilder('task');
-
-    if (task_priority) {
-      query.andWhere(`task.task_priority = :task_priority`, {
-        task_priority,
-      });
-    }
-
-    if (search) {
-      query.andWhere(
-        `LOWER(task.task_name) LIKE LOWER(:search) OR LOWER(task.task_description) LIKE LOWER(:search)`,
-        { search: `%${search}%` },
-      );
-    }
-
-    if (task_creation_time) {
-      query.andWhere(`DATE(task.task_creation_time) = :task_creation_time`, {
-        task_creation_time,
-      });
-    }
-
+  /* GET ALL TASKS */
+  public async getTasks(): Promise<Task[]> {
     try {
-      const tasks = await query.getMany();
+      const tasks = await this.taskRepository.find({
+        order: {
+          task_creation_time: 'DESC',
+        },
+      });
       return tasks;
     } catch (error) {
-      this.logger.error(
-        `Failed to fetch tasks. Filters: ${JSON.stringify(filterDto)}`,
-        error.stack,
-      );
+      this.logger.error(`Failed to fetch tasks.`, error.stack);
       throw new InternalServerErrorException();
     }
   }
@@ -107,6 +86,7 @@ export class TaskService {
       task_due_date,
       task_priority,
       task_list_id,
+      board_id,
     } = createTaskDto;
 
     const taskList = await this.taskListService.getTaskListById(task_list_id);
@@ -124,6 +104,7 @@ export class TaskService {
       task_description,
       task_due_date,
       task_priority,
+      board_id,
     });
 
     await this.taskRepository.save(newTask);

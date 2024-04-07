@@ -15,7 +15,7 @@ const boardSlice = createSlice({
          state.boards = action.payload.boards
       },
 
-      setCurrentBoard(state, action: PayloadAction<BoardModel>) {
+      setCurrentBoard(state, action: PayloadAction<BoardModel | undefined>) {
          state.currentBoard = action.payload
       },
 

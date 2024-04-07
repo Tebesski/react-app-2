@@ -54,7 +54,7 @@ export class TaskListService {
         `Failed to fetch task list with ID: ${id}`,
         error.stack,
       );
-      throw new Error(`Failed to fetch task list with board ID: ${id}`);
+      throw new Error(`Failed to fetch task list with ID: ${id}`);
     }
   }
 
@@ -64,6 +64,9 @@ export class TaskListService {
     try {
       const taskList = await this.taskListRepository.find({
         where: { board_id: id },
+        order: {
+          num: 'ASC',
+        },
       });
       return taskList;
     } catch (error) {

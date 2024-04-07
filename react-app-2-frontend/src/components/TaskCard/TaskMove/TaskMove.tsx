@@ -1,22 +1,33 @@
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { moveTask } from "@/reducers/task.reducer"
 import { Select, Option } from "@material-tailwind/react"
+import { RootState } from "@/reducers/root.reducer"
+import { moveTaskCard } from "@/api/task.api"
 
 type TaskMoveProps = { taskListName: string; taskId: string }
 
-// Mocked task list data
-const taskList = [
-   { task_list_id: "1", task_list_name: "List 1" },
-   { task_list_id: "2", task_list_name: "List 2" },
-   { task_list_id: "3", task_list_name: "List 3" },
-]
-
 export default function TaskMove({ taskListName, taskId }: TaskMoveProps) {
+   const dispatch = useDispatch()
+   const { currentTaskList } = useSelector(
+      (state: RootState) => state.taskListSlice
+   )
    const [newTaskList, setNewTaskList] = useState<string>("")
 
    function handleChange(taskListName: string | undefined) {
       if (!taskListName) return
-      setNewTaskList(taskListName)
-      console.log(`Moving task ${taskId} to list ${taskListName}`)
+      setNewTaskList(`🗎 ${taskListName}`)
+      const taskListId = currentTaskList.find(
+         (task) => `🗎 ${task.task_list_name}` === `🗎 ${taskListName}`
+      )?.task_list_id
+      if (!taskListId) return
+      moveTaskCard(taskId, taskListId)
+      dispatch(
+         moveTask({
+            task_id: taskId,
+            task_list_id: taskListId,
+         })
+      )
    }
 
    return (
@@ -25,14 +36,16 @@ export default function TaskMove({ taskListName, taskId }: TaskMoveProps) {
             label={newTaskList || "Move to:"}
             onChange={(value) => handleChange(value)}
          >
-            {taskList
-               .filter((task) => task.task_list_name !== taskListName)
+            {currentTaskList
+               .filter(
+                  (task) => `🗎 ${task.task_list_name}` !== `🗎 ${taskListName}`
+               )
                .map((task) => (
                   <Option key={task.task_list_id} value={task.task_list_name}>
-                     {task.task_list_name}
+                     {`🗎 ${task.task_list_name}`}
                   </Option>
                ))}
-         </Select>
+         </Select>{" "}
       </div>
    )
 }

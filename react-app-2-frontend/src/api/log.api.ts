@@ -9,7 +9,7 @@ export async function fetchLogsByBoardId(
 ): Promise<LogModel[] | undefined> {
    try {
       const res: AxiosResponse<LogModel[]> = await client.get(
-         `/log/${board_id}`
+         `/log/board/${board_id}`
       )
       return res.data
    } catch (error: any) {

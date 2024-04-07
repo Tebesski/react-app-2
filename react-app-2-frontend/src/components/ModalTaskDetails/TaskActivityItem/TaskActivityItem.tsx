@@ -1,14 +1,15 @@
 import LogModel from "@/models/Log.model"
 import TaskListModel from "../../../models/TaskList.model"
 import dayjs from "dayjs"
+import { useEffect } from "react"
 
-export default function TaskActivityItem({ logItem }: { logItem: LogModel }) {
+type TaskActivityItemProps = { logItem: LogModel; taskList: TaskListModel[] }
+
+export default function TaskActivityItem({
+   logItem,
+   taskList,
+}: TaskActivityItemProps) {
    const { log_action, log_date, new_value, old_value } = logItem
-
-   const taskList: TaskListModel[] = [
-      { task_list_id: "1", task_list_name: "List 1" },
-      { task_list_id: "2", task_list_name: "List 2" },
-   ]
 
    const oldList: TaskListModel | undefined = taskList.find(
       (list) => list.task_list_id === old_value

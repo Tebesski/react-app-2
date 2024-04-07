@@ -1,8 +1,13 @@
-import { deleteTaskList } from "@/api/task-list.api"
+import { deleteTaskList, updateTaskListName } from "@/api/task-list.api"
 import PopOverButton from "@/components/UI/Buttons/PopOverButton/PopOverButton"
 import PopOver from "@/components/UI/PopOver/PopOver"
 import { openModal } from "@/reducers/modal.reducer"
-import { deleteCurrentList, deleteList } from "@/reducers/task-list.reducer"
+import {
+   deleteCurrentList,
+   deleteList,
+   renameCurrentTaskList,
+   renameTaskList,
+} from "@/reducers/task-list.reducer"
 import { createRef, useState } from "react"
 import { useDispatch } from "react-redux"
 
@@ -21,10 +26,10 @@ export default function TaskListHeader({
    const dispatch = useDispatch()
    const [editingMode, setEditingMode] = useState(false)
    const [newListName, setNewListName] = useState(taskListName)
-   const listName = taskListName
 
    const handleEditList = () => {
       setEditingMode(true)
+      inputRef.current?.focus()
    }
 
    async function handleDeleteList() {
@@ -37,20 +42,28 @@ export default function TaskListHeader({
       dispatch(openModal("addTaskModal"))
    }
 
-   const handleSubmitListName = () => {
+   async function handleSubmitListName() {
       setEditingMode(false)
+      await updateTaskListName(taskListId, newListName)
+      dispatch(
+         renameCurrentTaskList({
+            task_list_id: taskListId,
+            task_list_name: newListName,
+         })
+      )
+      setNewListName("")
    }
 
    const handleCancelEdit = () => {
-      setNewListName(taskListName)
       setEditingMode(false)
+      setNewListName("")
    }
 
    const Name = editingMode ? (
       <div className="flex justify-between w-full">
          <input
             ref={inputRef}
-            value={newListName}
+            value={newListName || taskListName}
             onChange={(e) => setNewListName(e.target.value)}
             className="bg-gray-200 rounded p-1 text-sm"
          />
@@ -63,7 +76,7 @@ export default function TaskListHeader({
          </button>
       </div>
    ) : (
-      <p className="text-dark text-sm">{listName}</p>
+      <p className="text-dark text-sm">{taskListName}</p>
    )
 
    return (

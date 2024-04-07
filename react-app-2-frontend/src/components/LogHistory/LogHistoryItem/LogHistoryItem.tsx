@@ -2,8 +2,14 @@ import LogModel from "@/models/Log.model"
 import TaskCardModel from "../../../models/TaskCard.model"
 import TaskListModel from "../../../models/TaskList.model"
 import dayjs from "dayjs"
+import { RootState } from "@/reducers/root.reducer"
+import { useSelector } from "react-redux"
 
-export default function LogHistoryItem({ logItem }: { logItem: LogModel }) {
+type LogHistoryItemProps = {
+   logItem: LogModel
+}
+
+export default function LogHistoryItem({ logItem }: LogHistoryItemProps) {
    const {
       entity_field,
       entity_id,
@@ -14,81 +20,15 @@ export default function LogHistoryItem({ logItem }: { logItem: LogModel }) {
       old_value,
    } = logItem
 
-   const taskList: TaskListModel[] = [
-      { task_list_id: "1", task_list_name: "List 1" },
-      { task_list_id: "2", task_list_name: "List 2" },
-   ]
+   const { tasks } = useSelector((state: RootState) => state.taskSlice)
+   const { currentTaskList } = useSelector(
+      (state: RootState) => state.taskListSlice
+   )
 
-   const tasks: TaskCardModel[] = [
-      {
-         task_id: "1",
-         task_name: "Task 1",
-         task_list_id: "",
-         task_description: "",
-         task_due_date: "",
-         task_priority: "",
-         task_creation_date: "",
-      },
-      {
-         task_id: "2",
-         task_name: "Task 2",
-         task_list_id: "",
-         task_description: "",
-         task_due_date: "",
-         task_priority: "",
-         task_creation_date: "",
-      },
-      {
-         task_id: "3",
-         task_name: "Task 3",
-         task_list_id: "",
-         task_description: "",
-         task_due_date: "",
-         task_priority: "",
-         task_creation_date: "",
-      },
-      {
-         task_id: "4",
-         task_name: "Task 4",
-         task_list_id: "",
-         task_description: "",
-         task_due_date: "",
-         task_priority: "",
-         task_creation_date: "",
-      },
-      {
-         task_id: "5",
-         task_name: "Task 5",
-         task_list_id: "",
-         task_description: "",
-         task_due_date: "",
-         task_priority: "",
-         task_creation_date: "",
-      },
-      {
-         task_id: "6",
-         task_name: "Task 6",
-         task_list_id: "",
-         task_description: "",
-         task_due_date: "",
-         task_priority: "",
-         task_creation_date: "",
-      },
-      {
-         task_id: "7",
-         task_name: "Task 7",
-         task_list_id: "",
-         task_description: "",
-         task_due_date: "",
-         task_priority: "",
-         task_creation_date: "",
-      },
-   ]
-
-   const oldList: TaskListModel | undefined = taskList.find(
+   const oldList: TaskListModel | undefined = currentTaskList.find(
       (list) => list.task_list_id === old_value
    )
-   const newList: TaskListModel | undefined = taskList.find(
+   const newList: TaskListModel | undefined = currentTaskList.find(
       (list) => list.task_list_id === new_value
    )
 
@@ -119,8 +59,12 @@ export default function LogHistoryItem({ logItem }: { logItem: LogModel }) {
               new_value.slice(1).toLowerCase()
             : new_value
       }`,
-      UPD_DESCRIPTION: `${getField(entity_field)} from ${old_value} to ${new_value}`,
-      UPD_DUE_DATE: `${getField(entity_field)} from ${old_value} to ${new_value}`,
+      UPD_DESCRIPTION: `${getField(
+         entity_field
+      )} from ${old_value} to ${new_value}`,
+      UPD_DUE_DATE: `${getField(
+         entity_field
+      )} from ${old_value} to ${new_value}`,
       MOVE: ` from 🗎 ${oldList?.task_list_name} to 🗎 ${newList?.task_list_name}`,
    }
 
@@ -129,19 +73,21 @@ export default function LogHistoryItem({ logItem }: { logItem: LogModel }) {
          const task: TaskCardModel | undefined = tasks.find(
             (task) => task.task_id === id
          )
-         return "◎ " + (task?.task_name || old_value || new_value)
+         return "◎ " + (task?.task_name || "_")
       } else if (type === "Task list") {
-         const list: TaskListModel | undefined = taskList.find(
+         const list: TaskListModel | undefined = currentTaskList.find(
             (list) => list.task_list_id === id
          )
-         return "🗎 " + (list?.task_list_name || old_value || new_value)
+         return "🗎 " + (list?.task_list_name || "_")
       } else {
          return "_"
       }
    }
 
    const logMessage = {
-      actionText: `You ${actionTexts[log_action] || "performed unknown action on"}`,
+      actionText: `You ${
+         actionTexts[log_action] || "performed unknown action on"
+      }`,
       entityNameText: getEntityNameText(entity_type, entity_id),
       additionalText: additionalTexts[log_action] || "",
    }

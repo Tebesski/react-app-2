@@ -32,6 +32,39 @@ export class LogTaskSubscriber implements EntitySubscriberInterface<Task> {
   }
 
   /* ==================== AFTER UPDATE ====================*/
+  // async afterUpdate(event: UpdateEvent<Task>) {
+  //   const fieldActionMap = {
+  //     task_name: TaskLogActions.RENAME,
+  //     task_description: TaskLogActions.UPD_DESCRIPTION,
+  //     task_priority: TaskLogActions.UPD_PRIORITY,
+  //     task_due_date: TaskLogActions.UPD_DUE_DATE,
+  //     task_list_id: TaskLogActions.MOVE,
+  //   };
+
+  //   for (const [field, action] of Object.entries(fieldActionMap)) {
+  //     const oldValue = event.databaseEntity[field];
+  //     const newValue = event.entity[field];
+
+  //     if (
+  //       oldValue instanceof Date &&
+  //       newValue instanceof Date &&
+  //       oldValue.getTime() === newValue.getTime()
+  //     ) {
+  //       continue;
+  //     }
+
+  //     if (oldValue !== newValue) {
+  //       await this.logAction(
+  //         event,
+  //         action,
+  //         event.databaseEntity,
+  //         field as keyof Task,
+  //         oldValue?.toString(),
+  //         newValue?.toString(),
+  //       );
+  //     }
+  //   }
+  // }
   async afterUpdate(event: UpdateEvent<Task>) {
     const fieldActionMap = {
       task_name: TaskLogActions.RENAME,
@@ -79,6 +112,16 @@ export class LogTaskSubscriber implements EntitySubscriberInterface<Task> {
   }
 
   /* ==================== LOG ACTION ====================*/
+  // private checkIfDate(value: string | null) {
+  //   if (
+  //     value &&
+  //     isNaN(Number(value)) &&
+  //     new Date(value).toString() !== 'Invalid Date'
+  //   ) {
+  //     return new Date(value).toISOString().slice(0, 10);
+  //   }
+  //   return value;
+  // }
   private checkIfDate(value: string | null) {
     if (
       value &&
@@ -105,6 +148,7 @@ export class LogTaskSubscriber implements EntitySubscriberInterface<Task> {
     log.entity_field = field;
     log.old_value = oldValue === null ? null : this.checkIfDate(oldValue);
     log.new_value = newValue === null ? null : this.checkIfDate(newValue);
+    log.board_id = event.entity.board_id;
 
     const updateDetails =
       !!oldValue && !!newValue

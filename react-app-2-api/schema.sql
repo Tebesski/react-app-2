@@ -58,7 +58,7 @@ CREATE TABLE public.log (
     entity_field character varying(255),
     new_value text,
     old_value text,
-    board_id uuid
+    board_id uuid NOT NULL
 );
 
 
@@ -68,7 +68,8 @@ CREATE TABLE public.log (
 
 CREATE TABLE public.task (
     task_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    task_list_id uuid,
+    task_list_id uuid NOT NULL,
+    board_id uuid NOT NULL,
     task_name character varying(255) NOT NULL,
     task_priority character varying(255) NOT NULL,
     task_due_date date DEFAULT now() NOT NULL,
@@ -209,6 +210,9 @@ ALTER TABLE ONLY public.task_list
 
 ALTER TABLE ONLY public.task
     ADD CONSTRAINT task_task_list_id_fkey FOREIGN KEY (task_list_id) REFERENCES public.task_list(task_list_id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY public.task
+    ADD CONSTRAINT fk_task_board_id FOREIGN KEY (board_id) REFERENCES public.board(board_id) ON DELETE CASCADE;
 
 
 --

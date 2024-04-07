@@ -41,6 +41,7 @@ export default function ModalAddList({ currentBoard }: ModalAddListProps) {
          if (!currentBoard) return
          const newTaskList = await createTaskList(listName, currentBoard)
          setNewList(newTaskList)
+         setListName("")
       }
       addNewList()
    }

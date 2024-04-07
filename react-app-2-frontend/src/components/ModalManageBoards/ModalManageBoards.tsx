@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/reducers/root.reducer"
 import { createRef, useState } from "react"
 import dayjs from "dayjs"
+import { renameBoard } from "@/reducers/board.reducer"
+import { updateBoardName } from "@/api/board.api"
 
 export default function ModalManageBoards() {
    const dispatch = useDispatch()
@@ -16,38 +18,43 @@ export default function ModalManageBoards() {
 
    const closeBoardManagerModal = () => {
       dispatch(closeModal("boardManagerModal"))
+      setEditingMode(false)
    }
 
    const TABLE_HEAD = ["Table", "Created at", "", ""]
    const inputRef = createRef<HTMLInputElement>()
    const [editingMode, setEditingMode] = useState(false)
-   const [newTableName, setNewTableName] = useState("")
+   const [newBoardName, setNewBoardName] = useState("")
 
    const handleEditBoard = () => {
       setEditingMode(true)
+      inputRef.current?.focus()
    }
 
-   const handleSubmitTableName = () => {
+   async function handleSubmitTableName(board_id: string) {
       setEditingMode(false)
+      await updateBoardName(board_id, newBoardName)
+      dispatch(renameBoard({ board_id, board_name: newBoardName }))
+      setNewBoardName("")
    }
 
    const handleCancelEdit = () => {
-      setNewTableName("")
+      setNewBoardName("")
       setEditingMode(false)
    }
 
    const tableData = boards.map((board) => ({
       name: editingMode ? (
-         <div className="flex justify-between w-full">
+         <span className="flex justify-between w-full">
             <input
                ref={inputRef}
-               value={newTableName}
-               onChange={(e) => setNewTableName(e.target.value)}
+               value={newBoardName || board.board_name}
+               onChange={(e) => setNewBoardName(e.target.value)}
                className="bg-gray-200 rounded p-1 text-sm"
             />
 
             <button
-               onClick={handleSubmitTableName}
+               onClick={() => handleSubmitTableName(board.board_id)}
                className="focus:outline-none"
             >
                <i className="fas fa-check text-green-500"></i>
@@ -55,7 +62,7 @@ export default function ModalManageBoards() {
             <button onClick={handleCancelEdit} className="focus:outline-none">
                <i className="fas fa-times text-red-500"></i>
             </button>
-         </div>
+         </span>
       ) : (
          board.board_name
       ),
@@ -63,6 +70,7 @@ export default function ModalManageBoards() {
       board_id: board.board_id,
    }))
 
+   // DELETE BOARD FUNCTIONALITY IS THERE:
    const mainContent = (
       <Table
          tableHead={TABLE_HEAD}

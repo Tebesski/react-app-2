@@ -29,6 +29,20 @@ export class LogService {
     }
   }
 
+  public async getLogsByBoardId(id: string): Promise<Log[]> {
+    try {
+      const boardLogs = await this.logRepositry.find({
+        where: { board_id: id },
+        order: { log_date: 'DESC' },
+      });
+
+      return boardLogs;
+    } catch (error) {
+      this.logger.error(`Failed to fetch log with ID: ${id}`, error.stack);
+      throw new InternalServerErrorException();
+    }
+  }
+
   public async getLogsByCardId(id: string): Promise<Log[]> {
     try {
       const cardLogs = await this.logRepositry.find({

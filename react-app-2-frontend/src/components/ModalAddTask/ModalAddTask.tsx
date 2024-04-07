@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import SubmitButton from "../UI/Buttons/SubmitButton/SubmitButton"
 import FormInput from "../UI/Form/FormInput/FormInput"
 import Modal from "../UI/Modal/Modal"
-import { Dialog } from "@material-tailwind/react"
+import { Dialog, Option, Select } from "@material-tailwind/react"
 import FromDropdown from "../UI/Form/FormDropdown/FormDropdown"
 import Datepicker from "tailwind-datepicker-react"
 import { useDispatch, useSelector } from "react-redux"
@@ -18,6 +18,7 @@ type ModalAddTaskProps = { taskListId: string }
 export default function ModalAddTask({ taskListId }: ModalAddTaskProps) {
    const dispatch = useDispatch()
    const { addTaskModal } = useSelector((state: RootState) => state.modalSlice)
+   const { currentBoard } = useSelector((state: RootState) => state.boardSlice)
 
    const closeAddTaskModal = () => {
       dispatch(closeModal("addTaskModal"))
@@ -29,9 +30,9 @@ export default function ModalAddTask({ taskListId }: ModalAddTaskProps) {
    const [priority, setPriority] = useState<TaskPriorityEnum | "">("")
    const [showDatepicker, setShowDatepicker] = useState(false)
    const priorities = [
-      { key: "low", value: "LOW" },
-      { key: "medium", value: "MEDIUM" },
-      { key: "high", value: "HIGH" },
+      { id: "low", value: "LOW" },
+      { id: "medium", value: "MEDIUM" },
+      { id: "high", value: "HIGH" },
    ]
    const [newTask, setNewTask] = useState<TaskCardModel>()
 
@@ -50,8 +51,13 @@ export default function ModalAddTask({ taskListId }: ModalAddTaskProps) {
             task_description: taskDescription,
             task_due_date: dueDate.toISOString(),
             task_priority: priority,
+            board_id: currentBoard!.board_id,
          })
          setNewTask(newCard)
+         setTaskName("")
+         setTaskDescription("")
+         setDueDate(new Date())
+         setPriority("")
       }
       addTask()
    }
@@ -92,12 +98,20 @@ export default function ModalAddTask({ taskListId }: ModalAddTaskProps) {
             required={true}
             variant="outlined"
          />
-         <FromDropdown
-            options={priorities}
-            setSelectedOpt={handleChangePriority}
-            label={"Priority"}
-            selectedOpt={priority}
-         />
+         <div className="min-w-60">
+            <Select
+               label="Priority"
+               defaultValue={priorities[0].value}
+               value={priority}
+               onChange={handleChangePriority}
+            >
+               {priorities.map((opt) => (
+                  <Option key={opt.id} value={opt.value}>
+                     {opt.value}
+                  </Option>
+               ))}
+            </Select>
+         </div>
          <Datepicker
             show={showDatepicker}
             setShow={setShowDatepicker}
@@ -119,7 +133,7 @@ export default function ModalAddTask({ taskListId }: ModalAddTaskProps) {
    )
 
    return (
-      <Dialog open={addTaskModal} handler={() => {}} size="xs">
+      <Dialog open={addTaskModal} handler={closeAddTaskModal} size="xs">
          <Modal
             mainContent={listNameInput}
             title={""}

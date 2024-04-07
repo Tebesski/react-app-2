@@ -6,7 +6,7 @@ import { Dialog } from "@material-tailwind/react"
 import { closeModal } from "@/reducers/modal.reducer"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/reducers/root.reducer"
-import { addBoard } from "@/reducers/board.reducer"
+import { addBoard, setCurrentBoard } from "@/reducers/board.reducer"
 import BoardModel from "@/models/Board.model"
 import { createBoard } from "@/api/board.api"
 
@@ -28,6 +28,9 @@ export default function ModalAddBoard() {
       async function addTask() {
          const newBoard = await createBoard(boardName)
          setNewBoard(newBoard)
+         dispatch(setCurrentBoard(newBoard))
+
+         setBoardName("")
       }
       addTask()
    }

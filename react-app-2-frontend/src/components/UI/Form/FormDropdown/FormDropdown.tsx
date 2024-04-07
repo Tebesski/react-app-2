@@ -1,20 +1,20 @@
 import { Select, Option } from "@material-tailwind/react"
-
 type FromDropdownProps = {
-   options: { key: string; value: string }[]
-   setSelectedOpt: React.Dispatch<string>
+   options: { id: string; value: string }[]
+   submitChangeHandler: (id: string) => void
    selectedOpt: string
    label: string
 }
-
 export default function FromDropdown({
    options,
-   setSelectedOpt,
+   submitChangeHandler,
    selectedOpt,
    label,
 }: FromDropdownProps) {
-   function handleChange(optValue: string | undefined) {
-      setSelectedOpt(optValue!)
+   function handleChange(value: string | undefined) {
+      if (value) {
+         submitChangeHandler(value)
+      }
    }
 
    return (
@@ -22,11 +22,11 @@ export default function FromDropdown({
          <Select
             label={label}
             defaultValue={options[0].value}
-            onChange={handleChange}
             value={selectedOpt}
+            onChange={handleChange}
          >
             {options.map((opt) => (
-               <Option key={opt.key} value={opt.value}>
+               <Option key={opt.id} value={opt.value}>
                   {opt.value}
                </Option>
             ))}

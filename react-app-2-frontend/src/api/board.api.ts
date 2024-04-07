@@ -62,7 +62,7 @@ export async function updateBoardName(
 ): Promise<BoardModel | undefined> {
    try {
       const res: AxiosResponse<BoardModel> = await client.patch(
-         `/board/${board_id}`,
+         `board/${board_id}/board_name`,
          { board_name }
       )
       return res.data

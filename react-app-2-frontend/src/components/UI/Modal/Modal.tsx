@@ -16,6 +16,15 @@ type ModalProps = {
    contentCentered?: boolean
    contentFullWidth?: boolean
    contentPadding?: number
+   overflow?:
+      | "hidden"
+      | "auto"
+      | "scroll"
+      | "visible"
+      | "auto-x"
+      | "auto-y"
+      | "hidden-x"
+      | "hidden-y"
 }
 
 export default function Modal({
@@ -29,12 +38,13 @@ export default function Modal({
    contentCentered = false,
    contentFullWidth,
    contentPadding,
+   overflow = "hidden",
 }: ModalProps) {
    return (
       <div
-         className={`bg-white ${
+         className={`bg-light ${
             rounded ? "rounded-lg" : ""
-         } overflow-hidden shadow-lg ${fullHeight ? "h-full" : ""}`}
+         } overflow-${overflow} shadow-lg ${fullHeight ? "h-full" : ""}`}
       >
          <ModalHeader
             title={title}

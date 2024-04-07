@@ -16,4 +16,7 @@ export class CreateTaskDto {
 
   @IsNotEmpty()
   task_priority: TaskPriority;
+
+  @IsNotEmpty()
+  board_id: string;
 }

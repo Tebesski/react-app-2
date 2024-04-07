@@ -1,8 +1,9 @@
 import { Card, Typography } from "@material-tailwind/react"
 import ModalButton from "../Buttons/ModalButton/ModalButton"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { deleteBoard } from "@/api/board.api"
-import { deleteCurrentBoard } from "@/reducers/board.reducer"
+import { deleteCurrentBoard, setCurrentBoard } from "@/reducers/board.reducer"
+import { RootState } from "@/reducers/root.reducer"
 
 type TableProps = {
    tableHead: string[]
@@ -16,10 +17,19 @@ export default function Table({
    handleEditBoard,
 }: TableProps) {
    const dispatch = useDispatch()
+   const { boards } = useSelector((state: RootState) => state.boardSlice)
 
    async function handleDeleteBoard(boardId: string) {
+      const nextBoard = boards.find((board) => board.board_id !== boardId)
       await deleteBoard(boardId)
       dispatch(deleteCurrentBoard(boardId))
+      if (nextBoard) {
+         dispatch(setCurrentBoard(nextBoard))
+         localStorage.setItem("currentBoard", JSON.stringify(nextBoard))
+      } else {
+         dispatch(setCurrentBoard(undefined))
+         localStorage.removeItem("currentBoard")
+      }
    }
 
    return (
@@ -27,9 +37,9 @@ export default function Table({
          <table className="w-full text-left">
             <thead>
                <tr>
-                  {tableHead.map((head) => (
+                  {tableHead.map((head, index) => (
                      <th
-                        key={head}
+                        key={`${head}-${index}`}
                         className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
                      >
                         <Typography
@@ -51,7 +61,7 @@ export default function Table({
                      : "p-4 border-b border-blue-gray-50"
 
                   return (
-                     <tr key={index}>
+                     <tr key={board_id}>
                         {/* BOARD NAME */}
                         <td className={classes}>
                            <Typography

@@ -11,6 +11,11 @@ export class LogController {
     return await this.logService.getAllLogs();
   }
 
+  @Get('/board/:id')
+  public async getLogsByBoardId(@Param('id') id: string): Promise<Log[]> {
+    return await this.logService.getLogsByBoardId(id);
+  }
+
   @Get('/:id')
   public async getLogsByCardId(@Param('id') id: string): Promise<Log[]> {
     return await this.logService.getLogsByCardId(id);

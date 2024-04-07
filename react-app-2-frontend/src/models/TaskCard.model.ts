@@ -6,6 +6,7 @@ interface ITaskCard {
    task_due_date: string
    task_priority: string
    task_creation_date: string
+   board_id: string
 }
 
 export default class TaskCardModel implements ITaskCard {
@@ -16,6 +17,7 @@ export default class TaskCardModel implements ITaskCard {
    task_due_date: string
    task_priority: string
    task_creation_date: string
+   board_id: string
 
    constructor(
       task_id: string,
@@ -24,7 +26,8 @@ export default class TaskCardModel implements ITaskCard {
       task_description: string,
       task_due_date: string,
       task_priority: string,
-      task_creation_date: string
+      task_creation_date: string,
+      board_id: string
    ) {
       this.task_id = task_id
       this.task_list_id = task_list_id
@@ -33,5 +36,6 @@ export default class TaskCardModel implements ITaskCard {
       this.task_due_date = task_due_date
       this.task_priority = task_priority
       this.task_creation_date = task_creation_date
+      this.board_id = board_id
    }
 }

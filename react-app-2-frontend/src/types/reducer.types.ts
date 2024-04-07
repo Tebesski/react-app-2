@@ -7,8 +7,8 @@ import NotificationModel from "@/models/Notification.model"
 
 export type TaskState = {
    tasks: TaskCardModel[]
-   currentTasks: TaskCardModel[]
-   selectedTask: TaskCardModel | undefined
+   selectedTask: TaskCardModel | null
+   lastUpdated: number
 }
 
 export type TaskListState = {
@@ -31,11 +31,11 @@ export type NotificationState = {
 
 export type UpdateTaskState = {
    task_id: string
-   name: string
-   description: string
-   due_date: string
-   priority: TaskPriorityEnum
-   task_list_id: string
+   task_list_id?: string
+   name?: string
+   description?: string
+   due_date?: string
+   priority?: TaskPriorityEnum
 }
 
 export type ModalState = {
