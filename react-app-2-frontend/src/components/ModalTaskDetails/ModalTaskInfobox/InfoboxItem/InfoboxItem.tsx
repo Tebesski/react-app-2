@@ -7,7 +7,10 @@ type InfoboxItemProps = {
 
 export default function InfoboxItem({ icon, infoType }: InfoboxItemProps) {
    return (
-      <div className="flex justify-between items-center">
+      <div
+         className="flex justify-between items-center"
+         data-testid="infobox-item"
+      >
          <div className="flex gap-2 items-center">
             {icon && <i className={`fa fa-${icon}`}></i>}
             <span>{infoType}</span>

@@ -72,7 +72,12 @@ export default function ModalAddList({ currentBoard }: ModalAddListProps) {
    )
 
    return (
-      <Dialog open={addTaskListModal} handler={closeAddListModal} size="xs">
+      <Dialog
+         open={addTaskListModal}
+         handler={closeAddListModal}
+         size="xs"
+         data-testid="modal-task-add-list"
+      >
          <Modal
             mainContent={listNameInput}
             title={""}

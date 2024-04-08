@@ -118,7 +118,10 @@ export default function ModalTaskInfobox({ task }: ModalTaskInfoboxProps) {
    )
 
    return (
-      <div className="flex flex-col gap-4 pl-8">
+      <div
+         className="flex flex-col gap-4 pl-8"
+         data-testid="modal-task-infobox"
+      >
          <InfoboxItem icon={"question-circle"} infoType={listInfo} />
          <InfoboxItem icon={"calendar"} infoType={dueDateInfo} />
          <InfoboxItem icon={"tag"} infoType={priorityInfo} />

@@ -21,7 +21,7 @@ export default function ModalTaskTitle({
    setNewName,
 }: ModalTaskTitleProps) {
    return (
-      <div className="flex items-center pl-4">
+      <div className="flex items-center pl-4" data-testid="modal-task-title">
          <Typography variant="h3" color="blue-gray">
             {editingName ? (
                <div className="flex justify-between w-full">

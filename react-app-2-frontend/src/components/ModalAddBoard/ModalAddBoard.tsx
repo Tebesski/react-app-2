@@ -65,7 +65,12 @@ export default function ModalAddBoard() {
    )
 
    return (
-      <Dialog open={addBoardModal} handler={closeAddBoardModal} size="xs">
+      <Dialog
+         open={addBoardModal}
+         handler={closeAddBoardModal}
+         size="xs"
+         data-testid="modal-add-board"
+      >
          <Modal
             mainContent={listNameInput}
             title={""}

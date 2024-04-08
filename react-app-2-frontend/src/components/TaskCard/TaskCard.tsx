@@ -26,7 +26,7 @@ export default function TaskCard({
    onOpenTaskDetails,
 }: TaskCardProps) {
    return (
-      <div className="w-full border-2 border-gray-300">
+      <div className="w-full border-2 border-gray-300" data-testid="task-card">
          {/* ========= CARD HEADER ========= */}
          <TaskHeader
             taskName={taskName}

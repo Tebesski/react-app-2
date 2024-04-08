@@ -28,25 +28,30 @@ export default function FormInput({
 
    return multiline ? (
       <Textarea
+         data-testid="form-input-textarea"
          rows={rows}
          label={inputLabel}
          required={required}
          color="teal"
          variant={variant}
          value={value}
-         className={`focus:ring-0 focus:outline-none ${noBorder ? "border-0 border-bottom-1" : ""} ${classes}`}
+         className={`focus:ring-0 focus:outline-none ${
+            noBorder ? "border-0 border-bottom-1" : ""
+         } ${classes}`}
          onChange={
             changeHandler as React.ChangeEventHandler<HTMLTextAreaElement>
          }
       />
    ) : (
       <Input
+         data-testid="form-input-input"
          label={inputLabel}
          required={required}
          color="teal"
          variant={variant}
          value={value}
          onChange={changeHandler as React.ChangeEventHandler<HTMLInputElement>}
+         crossOrigin={undefined}
       />
    )
 }

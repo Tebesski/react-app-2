@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { TaskListState } from "@/types/reducer.types"
 import TaskListModel from "../models/TaskList.model"
 
-const initialState: TaskListState = {
+export const initialState: TaskListState = {
    taskLists: [],
    currentTaskList: [],
 }

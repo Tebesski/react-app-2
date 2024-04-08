@@ -85,6 +85,7 @@ export default function ModalManageBoards() {
          handler={closeBoardManagerModal}
          size="md"
          className="max-h-5/6"
+         data-testid="modal-manage-boards"
       >
          <Modal
             onClose={closeBoardManagerModal}

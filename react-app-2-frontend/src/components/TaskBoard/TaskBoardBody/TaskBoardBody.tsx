@@ -31,7 +31,6 @@ export default function TaskBoardBody({
             setTasks({
                tasks: tasks,
                selectedTask: null,
-               lastUpdated: Date.now(),
             })
          )
       }
@@ -44,7 +43,10 @@ export default function TaskBoardBody({
    }
 
    return (
-      <div className="flex flex-row justify-start items-start gap-4 overflow-auto pb-5 w-full">
+      <div
+         className="flex flex-row justify-start items-start gap-4 overflow-auto pb-5 w-full"
+         data-testid="task-board-body"
+      >
          {taskList!.map((taskList) => (
             <div className="flex-basis-22" key={taskList.task_list_id}>
                <TaskList

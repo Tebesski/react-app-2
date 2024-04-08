@@ -62,6 +62,7 @@ export default function LogHistory() {
          open={logHistoryModal}
          className="p-0"
          onClose={closeHistory}
+         data-testid="log-history"
       >
          <Modal
             overflow="auto"

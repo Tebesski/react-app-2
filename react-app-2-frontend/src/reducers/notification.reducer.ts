@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { NotificationState } from "@/types/reducer.types"
 import NotificationModel from "@/models/Notification.model"
 
-const initialState: NotificationState = {
+export const initialState: NotificationState = {
    notifications: [],
 }
 

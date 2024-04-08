@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { ModalState } from "@/types/reducer.types"
 
-const initialState: ModalState = {
+export const initialState: ModalState = {
    addTaskModal: false,
    addTaskListModal: false,
    addBoardModal: false,

@@ -13,6 +13,7 @@ export default function PopOverButton({
 }: PopOverButtonProps) {
    return (
       <button
+         data-testid="popover-button"
          onClick={onClick}
          className={`btn icon-btn small-btn justify-start min-w-11/12 h-7 p-2 m-1 text-xs font-semibold text-${color} gap-2 transition-colors duration-200 ease-in-out hover:bg-light active:bg-gray-300 active:border-gray-400 active:text-dark`}
       >

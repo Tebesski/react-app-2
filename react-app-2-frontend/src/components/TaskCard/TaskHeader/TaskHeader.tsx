@@ -26,7 +26,10 @@ export default function TaskHeader({
    }
 
    return (
-      <div className="p-2 border-b border-gray-200 flex justify-between">
+      <div
+         className="p-2 border-b border-gray-200 flex justify-between"
+         data-testid="task-header"
+      >
          <div className="flex items-center justify-between">
             <div>
                <h2 className="font-semibold">{taskName}</h2>

@@ -20,15 +20,14 @@ export default function TaskBoard() {
    const dispatch = useDispatch()
 
    const { selectedTask } = useSelector((state: RootState) => state.taskSlice)
-   const { currentBoard, boards } = useSelector(
-      (state: RootState) => state.boardSlice
-   )
+   const { currentBoard } = useSelector((state: RootState) => state.boardSlice)
    const { currentTaskList } = useSelector(
       (state: RootState) => state.taskListSlice
    )
 
    useEffect(() => {
       const cachedBoard = localStorage.getItem("currentBoard")
+
       if (cachedBoard) {
          dispatch(setCurrentBoard(JSON.parse(cachedBoard)))
       }
@@ -91,6 +90,7 @@ export default function TaskBoard() {
                      size={"3xl"}
                      icon={"plus-square"}
                      customClasses="ml-1"
+                     data-testid="mocking-plus-button"
                   />
                   {"  "}
                   and create one!

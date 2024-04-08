@@ -14,6 +14,7 @@ export default function TaskDescription({
 
    return (
       <div
+         data-testid="task-description"
          className={`w-full min-h-24 max-h-24 cursor-pointer p-2 select-none ${
             isHovered ? "flare" : ""
          }`}

@@ -12,7 +12,6 @@ import {
 import { TaskService } from './task.service';
 
 import { CreateTaskDto } from './dto/create-task.dto';
-import { GetTaskFilterDto } from './dto/get-task-filter.dto';
 import { UpdateTaskPriorityDto } from './dto/update-task-priority.dto';
 import { Task } from './task.entity';
 import UpdateTaskNameDto from './dto/update-task-name.dto';
@@ -27,11 +26,9 @@ export class TaskController {
   constructor(private taskService: TaskService) {}
 
   @Get()
-  public async getTasks(@Query() filterDto: GetTaskFilterDto): Promise<Task[]> {
-    this.logger.verbose(
-      `Retrieving tasks. Filters: ${JSON.stringify(filterDto)}`,
-    );
-    return await this.taskService.getTasks(filterDto);
+  public async getTasks(): Promise<Task[]> {
+    this.logger.verbose(`Retrieving tasks all.`);
+    return await this.taskService.getTasks();
   }
 
   /* GET TASK BY ID */

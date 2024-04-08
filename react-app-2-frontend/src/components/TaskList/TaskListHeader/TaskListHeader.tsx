@@ -6,7 +6,6 @@ import {
    deleteCurrentList,
    deleteList,
    renameCurrentTaskList,
-   renameTaskList,
 } from "@/reducers/task-list.reducer"
 import { createRef, useState } from "react"
 import { useDispatch } from "react-redux"
@@ -60,7 +59,10 @@ export default function TaskListHeader({
    }
 
    const Name = editingMode ? (
-      <div className="flex justify-between w-full">
+      <div
+         className="flex justify-between w-full"
+         data-testid="task-list-editing-mode-on"
+      >
          <input
             ref={inputRef}
             value={newListName || taskListName}
@@ -76,17 +78,25 @@ export default function TaskListHeader({
          </button>
       </div>
    ) : (
-      <p className="text-dark text-sm">{taskListName}</p>
+      <p className="text-dark text-sm" data-testid="task-list-editing-mode-off">
+         {taskListName}
+      </p>
    )
 
    return (
-      <div className="bg-transparent border-t-2 border-b-2 border-opacity-20 border-[#222020] flex items-center justify-between py-2 px-4">
+      <div
+         className="bg-transparent border-t-2 border-b-2 border-opacity-20 border-[#222020] flex items-center justify-between py-2 px-4"
+         data-testid="task-list-header"
+      >
          {/* ----------------------------- LIST NAME ----------------------------- */}
          {Name}
 
          {/* ----------------------------- LIST OPTIONS ----------------------------- */}
          {editingMode ? null : (
-            <div className="flex gap-2 items-center">
+            <div
+               className="flex gap-2 items-center"
+               data-testid="task-list-options-editing-mode-off"
+            >
                <p className="text-dark">{taskListCardsAmount}</p>
 
                <PopOver>

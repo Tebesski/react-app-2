@@ -1,7 +1,6 @@
 import LogModel from "@/models/Log.model"
 import TaskListModel from "../../../models/TaskList.model"
 import dayjs from "dayjs"
-import { useEffect } from "react"
 
 type TaskActivityItemProps = { logItem: LogModel; taskList: TaskListModel[] }
 
@@ -51,7 +50,7 @@ export default function TaskActivityItem({
    }
 
    return (
-      <li>
+      <li data-testid="task-activity-item">
          <div className="flex flex-col gap-2">
             <p className="text-sm">
                <span className={textStyles.actionText}>

@@ -8,7 +8,6 @@ import NotificationModel from "@/models/Notification.model"
 export type TaskState = {
    tasks: TaskCardModel[]
    selectedTask: TaskCardModel | null
-   lastUpdated: number
 }
 
 export type TaskListState = {

@@ -8,7 +8,7 @@ function NotificationContainer() {
    )
 
    return (
-      <div>
+      <div data-testid="notification-container">
          {notifications.map((notification) => (
             <Notification key={notification.id} {...notification} />
          ))}

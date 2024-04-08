@@ -9,7 +9,7 @@ import { RootState } from "@/reducers/root.reducer"
 
 type BoardProps = { boards: BoardModel[] }
 
-export default function BoardSelector({ boards }: BoardProps) {
+export default function TaskBoardManager({ boards }: BoardProps) {
    const [selectedBoard, setSelectedBoard] = useState<string>("")
    const dispatch = useDispatch()
 
@@ -52,9 +52,14 @@ export default function BoardSelector({ boards }: BoardProps) {
                onChange={(value) => handleChange(value)}
                disabled={boards.length < 1 ? true : false}
                value={selectedBoard}
+               data-testid="select-board-button"
             >
                {boards.map((board) => (
-                  <Option key={board.board_id} value={board.board_name}>
+                  <Option
+                     key={board.board_id}
+                     value={board.board_name}
+                     data-testid="board-option"
+                  >
                      {board.board_name}
                   </Option>
                ))}

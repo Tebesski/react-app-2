@@ -33,7 +33,10 @@ export default function Table({
    }
 
    return (
-      <Card className="h-full w-full overflow-auto shadow-none border-0 rounded-none max-h-96">
+      <Card
+         className="h-full w-full overflow-auto shadow-none border-0 rounded-none max-h-96"
+         data-testid="modal-table"
+      >
          <table className="w-full text-left">
             <thead>
                <tr>

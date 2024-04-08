@@ -21,7 +21,10 @@ export default function TaskListBody({
    }
 
    return (
-      <div className="max-h-[500px] overflow-y-scroll taskListBody-scrollbar-hide">
+      <div
+         className="max-h-[500px] overflow-y-scroll taskListBody-scrollbar-hide"
+         data-testid="task-list-body"
+      >
          <div className="space-y-2">
             {tasks.map((task) => (
                <TaskCard

@@ -28,7 +28,7 @@ export default function ModalTaskDetails({ task }: ModalTaskDetailsProps) {
    const dispatch = useDispatch()
    const { taskDetailsModal } = useSelector(
       (state: RootState) => state.modalSlice
-   )
+   ) || { taskDetailsModal: false }
 
    const [name, setName] = useState<string>("")
    const [newName, setNewName] = useState<string>("")
@@ -117,7 +117,7 @@ export default function ModalTaskDetails({ task }: ModalTaskDetailsProps) {
 
    const Activity =
       isLoading || !logs ? (
-         <BackdropLoading isOpen={isLoading} />
+         <BackdropLoading data-testid="backdrop" isOpen={isLoading} />
       ) : (
          logs.map((logItem: LogModel) => (
             <TaskActivityItem
@@ -167,6 +167,7 @@ export default function ModalTaskDetails({ task }: ModalTaskDetailsProps) {
          handler={handleCloseTaskDetailsModal}
          size="xl"
          className="max-h-5/6"
+         data-testid="modal-task-details"
       >
          <Modal
             onClose={handleCloseTaskDetailsModal}

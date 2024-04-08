@@ -99,7 +99,7 @@ export default function LogHistoryItem({ logItem }: LogHistoryItemProps) {
    }
 
    return (
-      <li>
+      <li data-testid="log-history-item">
          <div className="flex items-center gap-2">
             <p className="text-sm">
                <span className={textStyles.actionText}>

@@ -64,5 +64,9 @@ export default function ModalTaskDescription({
       </div>
    )
 
-   return <div className="pl-4 w-5/6">{displayDescription}</div>
+   return (
+      <div className="pl-4 w-5/6" data-testid="modal-task-description">
+         {displayDescription}
+      </div>
+   )
 }

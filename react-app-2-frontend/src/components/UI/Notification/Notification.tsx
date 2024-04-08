@@ -25,6 +25,7 @@ export default function Notification({
 
    return (
       <Alert
+         data-testid="notification-element"
          open={notificationShown}
          icon={<i className={`fa fa-${icon}`} />}
          color={notificationType}

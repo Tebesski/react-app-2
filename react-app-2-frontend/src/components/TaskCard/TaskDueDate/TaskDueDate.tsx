@@ -6,7 +6,10 @@ type TaskDueDateProps = {
 
 export default function TaskDueDate({ taskDueDate }: TaskDueDateProps) {
    return (
-      <div className="flex gap-2 items-center text-dark">
+      <div
+         className="flex gap-2 items-center text-dark"
+         data-testid="task-due-date"
+      >
          <i className="fas fa-calendar"></i>
 
          <p className="text-sm">{dayjs(taskDueDate).format("ddd, DD MMM")}</p>

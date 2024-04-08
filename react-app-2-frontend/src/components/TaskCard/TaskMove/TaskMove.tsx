@@ -31,7 +31,7 @@ export default function TaskMove({ taskListName, taskId }: TaskMoveProps) {
    }
 
    return (
-      <div className="w-60">
+      <div className="w-60" data-testid="task-move">
          <Select
             label={newTaskList || "Move to:"}
             onChange={(value) => handleChange(value)}

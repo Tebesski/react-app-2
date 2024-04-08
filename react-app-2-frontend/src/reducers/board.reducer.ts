@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { BoardState } from "@/types/reducer.types"
 import BoardModel from "../models/Board.model"
 
-const initialState: BoardState = {
+export const initialState: BoardState = {
    boards: [],
    currentBoard: undefined,
 }

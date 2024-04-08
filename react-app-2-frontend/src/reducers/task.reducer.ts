@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { TaskState, UpdateTaskState } from "@/types/reducer.types"
+import { TaskState } from "@/types/reducer.types"
 import TaskCardModel from "../models/TaskCard.model"
 
-const initialState: TaskState = {
+export const initialState: TaskState = {
    tasks: [],
    selectedTask: null,
-   lastUpdated: Date.now(),
 }
 
 const taskSlice = createSlice({

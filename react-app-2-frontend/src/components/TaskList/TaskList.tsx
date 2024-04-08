@@ -24,7 +24,10 @@ export default function TaskList({
    }
 
    return (
-      <div className="flex flex-col space-y-2 w-full min-w-[275.2px] max-h-[550px] gap-2">
+      <div
+         className="flex flex-col space-y-2 w-full min-w-[275.2px] max-h-[550px] gap-2"
+         data-testid="task-list"
+      >
          <TaskListHeader
             taskListName={task_list_name}
             taskListCardsAmount={filteredTasks.length}
