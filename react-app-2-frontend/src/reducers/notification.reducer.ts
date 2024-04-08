@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { NotificationState } from "@/types/reducer.types"
-import NotificationModel from "@/models/Notification.model"
+import createNotification from "@/models/Notification.model"
 
 export const initialState: NotificationState = {
    notifications: [],
@@ -10,7 +10,10 @@ const notificationSlice = createSlice({
    name: "notification",
    initialState,
    reducers: {
-      addNotification: (state, action: PayloadAction<NotificationModel>) => {
+      addNotification: (
+         state,
+         action: PayloadAction<ReturnType<typeof createNotification>>
+      ) => {
          state.notifications.push(action.payload)
       },
 
