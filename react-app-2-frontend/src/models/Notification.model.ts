@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid"
+
 export interface INotification {
    id: string
    notificationText: string
@@ -14,13 +16,12 @@ export default class NotificationModel implements INotification {
    icon?: string
 
    constructor(
-      id: string,
       notificationText: string,
       notificationType: "green" | "red" | "blue" | "yellow",
       notificationShown: boolean,
       icon?: string
    ) {
-      this.id = id
+      this.id = uuidv4()
       this.notificationText = notificationText
       this.notificationType = notificationType
       this.notificationShown = notificationShown

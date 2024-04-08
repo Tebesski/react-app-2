@@ -1,7 +1,10 @@
 import { Alert, IconButton } from "@material-tailwind/react"
 import { INotification } from "@/models/Notification.model"
 import { useDispatch } from "react-redux"
-import { removeNotification } from "@/reducers/notification.reducer"
+import {
+   removeNotification,
+   toggleNotification,
+} from "@/reducers/notification.reducer"
 import { useEffect } from "react"
 
 export default function Notification({
@@ -16,6 +19,7 @@ export default function Notification({
    useEffect(() => {
       const timer = setTimeout(() => {
          dispatch(removeNotification(id))
+         dispatch(toggleNotification(id))
       }, 3000)
 
       return () => {
@@ -33,7 +37,7 @@ export default function Notification({
             mount: { y: 0 },
             unmount: { y: 100 },
          }}
-         className="h-10 min-w-60 items-center fixed top-0 right-0 z-50" // added positioning classes
+         className="h-12 w-60 items-center fixed top-5 right-5 z-50"
          action={
             <IconButton
                variant="text"

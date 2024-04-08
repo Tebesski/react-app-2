@@ -6,10 +6,10 @@ import {
   RemoveEvent,
 } from 'typeorm';
 import Log from './log.entity';
-import TaskList from 'src/task_list/task_list.entity';
-import { EntityType } from 'src/types/EntityType.enum';
+import TaskList from '../task_list/task_list.entity';
+import { EntityType } from '../types/EntityType.enum';
 import { Logger } from '@nestjs/common';
-import { TaskListLogActions } from 'src/types/TaskListLogActions.enum';
+import { TaskListLogActions } from '../types/TaskListLogActions.enum';
 
 @EventSubscriber()
 export default class LogTaskListSubscriber

@@ -6,7 +6,7 @@ import {
 import Log from './log.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityType } from 'src/types/EntityType.enum';
+import { EntityType } from '../types/EntityType.enum';
 
 @Injectable()
 export class LogService {

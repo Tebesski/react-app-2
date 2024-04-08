@@ -19,9 +19,19 @@ const notificationSlice = createSlice({
             (notification) => notification.id !== action.payload
          )
       },
+
+      toggleNotification: (state, action: PayloadAction<string>) => {
+         const notification = state.notifications.find(
+            (notification) => notification.id === action.payload
+         )
+         if (notification) {
+            notification.notificationShown = !notification.notificationShown
+         }
+      },
    },
 })
 
-export const { addNotification, removeNotification } = notificationSlice.actions
+export const { addNotification, removeNotification, toggleNotification } =
+   notificationSlice.actions
 
 export default notificationSlice.reducer

@@ -12,6 +12,11 @@ import {
    addNewTaskList,
 } from "@/reducers/task-list.reducer"
 import TaskListModel from "@/models/TaskList.model"
+import NotificationModel from "@/models/Notification.model"
+import {
+   addNotification,
+   toggleNotification,
+} from "@/reducers/notification.reducer"
 
 type ModalAddListProps = { currentBoard: string | undefined }
 
@@ -38,10 +43,29 @@ export default function ModalAddList({ currentBoard }: ModalAddListProps) {
 
    function handleListSubmit() {
       async function addNewList() {
-         if (!currentBoard) return
-         const newTaskList = await createTaskList(listName, currentBoard)
-         setNewList(newTaskList)
-         setListName("")
+         try {
+            if (!currentBoard) return
+            const newTaskList = await createTaskList(listName, currentBoard)
+            setNewList(newTaskList)
+
+            const notification = new NotificationModel(
+               `Task list ${listName} added`,
+               "green",
+               false
+            )
+            dispatch(addNotification(notification))
+            dispatch(toggleNotification(notification.id))
+            setListName("")
+         } catch (error) {
+            console.error("Error adding task list")
+            const notification = new NotificationModel(
+               "Error adding task list",
+               "red",
+               false
+            )
+            dispatch(addNotification(notification))
+            dispatch(toggleNotification(notification.id))
+         }
       }
       addNewList()
    }

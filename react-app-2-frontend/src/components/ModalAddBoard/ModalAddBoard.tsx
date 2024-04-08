@@ -9,6 +9,11 @@ import { RootState } from "@/reducers/root.reducer"
 import { addBoard, setCurrentBoard } from "@/reducers/board.reducer"
 import BoardModel from "@/models/Board.model"
 import { createBoard } from "@/api/board.api"
+import NotificationModel from "@/models/Notification.model"
+import {
+   addNotification,
+   toggleNotification,
+} from "@/reducers/notification.reducer"
 
 export default function ModalAddBoard() {
    const dispatch = useDispatch()
@@ -26,11 +31,29 @@ export default function ModalAddBoard() {
 
    function handleBoardSubmit() {
       async function addTask() {
-         const newBoard = await createBoard(boardName)
-         setNewBoard(newBoard)
-         dispatch(setCurrentBoard(newBoard))
+         try {
+            const newBoard = await createBoard(boardName)
+            setNewBoard(newBoard)
+            dispatch(setCurrentBoard(newBoard))
 
-         setBoardName("")
+            const notification = new NotificationModel(
+               `Board ${boardName} added`,
+               "green",
+               false
+            )
+            dispatch(addNotification(notification))
+            dispatch(toggleNotification(notification.id))
+
+            setBoardName("")
+         } catch (error) {
+            const notification = new NotificationModel(
+               "Error adding board",
+               "red",
+               false
+            )
+            dispatch(addNotification(notification))
+            dispatch(toggleNotification(notification.id))
+         }
       }
       addTask()
    }

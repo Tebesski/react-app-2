@@ -11,6 +11,11 @@ import { TaskPriorityEnum } from "@/types/TaskPriorityEnum"
 import { addNewTask } from "@/reducers/task.reducer"
 import TaskCardModel from "@/models/TaskCard.model"
 import { createTaskCard } from "@/api/task.api"
+import NotificationModel from "@/models/Notification.model"
+import {
+   addNotification,
+   toggleNotification,
+} from "@/reducers/notification.reducer"
 
 type ModalAddTaskProps = { taskListId: string }
 
@@ -44,19 +49,38 @@ export default function ModalAddTask({ taskListId }: ModalAddTaskProps) {
 
    function handleTaskSubmit() {
       async function addTask() {
-         const newCard = await createTaskCard({
-            task_list_id: taskListId,
-            task_name: taskName,
-            task_description: taskDescription,
-            task_due_date: dueDate.toISOString(),
-            task_priority: priority,
-            board_id: currentBoard!.board_id,
-         })
-         setNewTask(newCard)
-         setTaskName("")
-         setTaskDescription("")
-         setDueDate(new Date())
-         setPriority("")
+         try {
+            const newCard = await createTaskCard({
+               task_list_id: taskListId,
+               task_name: taskName,
+               task_description: taskDescription,
+               task_due_date: dueDate.toISOString(),
+               task_priority: priority,
+               board_id: currentBoard!.board_id,
+            })
+            setNewTask(newCard)
+            setTaskName("")
+            setTaskDescription("")
+            setDueDate(new Date())
+            setPriority("")
+
+            const notification = new NotificationModel(
+               `Task ${taskName} added`,
+               "green",
+               false
+            )
+            dispatch(addNotification(notification))
+            dispatch(toggleNotification(notification.id))
+         } catch (error) {
+            console.error("Error adding task")
+            const notification = new NotificationModel(
+               "Error adding task",
+               "red",
+               false
+            )
+            dispatch(addNotification(notification))
+            dispatch(toggleNotification(notification.id))
+         }
       }
       addTask()
    }

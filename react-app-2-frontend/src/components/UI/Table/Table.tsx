@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { deleteBoard } from "@/api/board.api"
 import { deleteCurrentBoard, setCurrentBoard } from "@/reducers/board.reducer"
 import { RootState } from "@/reducers/root.reducer"
+import {
+   addNotification,
+   toggleNotification,
+} from "@/reducers/notification.reducer"
+import NotificationModel from "@/models/Notification.model"
 
 type TableProps = {
    tableHead: string[]
@@ -20,15 +25,36 @@ export default function Table({
    const { boards } = useSelector((state: RootState) => state.boardSlice)
 
    async function handleDeleteBoard(boardId: string) {
-      const nextBoard = boards.find((board) => board.board_id !== boardId)
-      await deleteBoard(boardId)
-      dispatch(deleteCurrentBoard(boardId))
-      if (nextBoard) {
-         dispatch(setCurrentBoard(nextBoard))
-         localStorage.setItem("currentBoard", JSON.stringify(nextBoard))
-      } else {
-         dispatch(setCurrentBoard(undefined))
-         localStorage.removeItem("currentBoard")
+      try {
+         const nextBoard = boards.find((board) => board.board_id !== boardId)
+         await deleteBoard(boardId)
+         dispatch(deleteCurrentBoard(boardId))
+         if (nextBoard) {
+            dispatch(setCurrentBoard(nextBoard))
+            localStorage.setItem("currentBoard", JSON.stringify(nextBoard))
+         } else {
+            dispatch(setCurrentBoard(undefined))
+            localStorage.removeItem("currentBoard")
+         }
+
+         const notification = new NotificationModel(
+            `Board was successfully deleted`,
+            "yellow",
+            false,
+            "trash"
+         )
+         dispatch(addNotification(notification))
+         dispatch(toggleNotification(notification.id))
+      } catch (error) {
+         console.error("Error deleting board")
+         const notification = new NotificationModel(
+            `Board ${boardId} was not deleted`,
+            "red",
+            false,
+            "exclamation-circle"
+         )
+         dispatch(addNotification(notification))
+         dispatch(toggleNotification(notification.id))
       }
    }
 

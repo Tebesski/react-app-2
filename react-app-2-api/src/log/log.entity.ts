@@ -1,7 +1,7 @@
 import { IsUUID } from 'class-validator';
-import { EntityType } from 'src/types/EntityType.enum';
-import { TaskListLogActions } from 'src/types/TaskListLogActions.enum';
-import { TaskLogActions } from 'src/types/TaskLogActions.enum';
+import { EntityType } from '../types/EntityType.enum';
+import { TaskListLogActions } from '../types/TaskListLogActions.enum';
+import { TaskLogActions } from '../types/TaskLogActions.enum';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

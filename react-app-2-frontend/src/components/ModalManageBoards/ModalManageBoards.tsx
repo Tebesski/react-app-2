@@ -8,6 +8,11 @@ import { createRef, useState } from "react"
 import dayjs from "dayjs"
 import { renameBoard } from "@/reducers/board.reducer"
 import { updateBoardName } from "@/api/board.api"
+import NotificationModel from "@/models/Notification.model"
+import {
+   addNotification,
+   toggleNotification,
+} from "@/reducers/notification.reducer"
 
 export default function ModalManageBoards() {
    const dispatch = useDispatch()
@@ -32,10 +37,32 @@ export default function ModalManageBoards() {
    }
 
    async function handleSubmitTableName(board_id: string) {
-      setEditingMode(false)
-      await updateBoardName(board_id, newBoardName)
-      dispatch(renameBoard({ board_id, board_name: newBoardName }))
-      setNewBoardName("")
+      try {
+         setEditingMode(false)
+         await updateBoardName(board_id, newBoardName)
+         dispatch(renameBoard({ board_id, board_name: newBoardName }))
+
+         const notification = new NotificationModel(
+            `Board name was changed to ${newBoardName}`,
+            "green",
+            false,
+            "check-circle"
+         )
+         dispatch(addNotification(notification))
+         dispatch(toggleNotification(notification.id))
+
+         setNewBoardName("")
+      } catch (error) {
+         console.error("Error updating board name")
+         const notification = new NotificationModel(
+            `Board name was not changed`,
+            "red",
+            false,
+            "exclamation-circle"
+         )
+         dispatch(addNotification(notification))
+         dispatch(toggleNotification(notification.id))
+      }
    }
 
    const handleCancelEdit = () => {
